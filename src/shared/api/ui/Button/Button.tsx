@@ -3,7 +3,7 @@ import React from 'react';
 import styles from './Button.module.scss';
 
 type Props = {
-  variant?: 'filled' | 'outlined';
+  variant?: 'filled' | 'outlined' | 'fluttened';
   iconUrl?: string;
   text?: string;
   onClick?: () => void;
