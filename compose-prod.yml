@@ -1,0 +1,10 @@
+services:
+  frontend:
+    container_name: allfuneral-frontend-prod
+    image: allfuneral-frontend-prod
+    build:
+      context: ./
+      dockerfile: Dockerfile.prod
+    ports:
+      - "80:80"
+    restart: on-failure:5

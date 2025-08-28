@@ -1,0 +1,9 @@
+FROM node:22-alpine AS base
+
+WORKDIR /app
+
+COPY . .
+
+EXPOSE 5173
+
+CMD sh -c '[ -d node_modules ] && exec yarn dev --host || (yarn install --frozen-lockfile && exec yarn dev --host)'

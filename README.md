@@ -1,54 +1,38 @@
-# React + TypeScript + Vite
+## Running the Application
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+You can run the application in three different modes: using Docker in development mode, using Docker in production mode, or running it directly on your local machine.
 
-Currently, two official plugins are available:
+### Running with Docker (Development Mode)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+1. Ensure you have Docker installed on your machine.
+2. It is recommended to remove the `node_modules` directory before building the container to avoid potential issues:
+   ```sh
+   rm -rf node_modules
+   ```
+3. Build and start the Docker container using the following command:
+   ```sh
+   docker compose -f compose-dev.yml up --build
+   ```
+4. Open your browser and navigate to `http://localhost:5173` to see the application running.
 
-## Expanding the ESLint configuration
+### Running with Docker (Production Mode)
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+1. Ensure you have Docker installed on your machine.
+2. Build and start the Docker container using the following command:
+   ```sh
+   docker compose -f compose-prod.yml up --build
+   ```
+4. Open your browser and navigate to `http://localhost` to see the application running.
 
-```js
-export default tseslint.config({
-  extends: [
-    // Remove ...tseslint.configs.recommended and replace with this
-    ...tseslint.configs.recommendedTypeChecked,
-    // Alternatively, use this for stricter rules
-    ...tseslint.configs.strictTypeChecked,
-    // Optionally, add this for stylistic rules
-    ...tseslint.configs.stylisticTypeChecked,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
+### Running Directly on Your Local Machine
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
-
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default tseslint.config({
-  plugins: {
-    // Add the react-x and react-dom plugins
-    'react-x': reactX,
-    'react-dom': reactDom,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended typescript rules
-    ...reactX.configs['recommended-typescript'].rules,
-    ...reactDom.configs.recommended.rules,
-  },
-})
-```
+1. Ensure you have Node.js and Yarn installed on your machine.
+2. Install the dependencies by running:
+   ```sh
+   yarn install
+   ```
+3. Start the development server by running:
+   ```sh
+   yarn dev
+   ```
+4. Open your browser and navigate to `http://localhost:5173` to see the application running.
