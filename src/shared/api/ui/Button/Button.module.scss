@@ -12,6 +12,16 @@
   cursor: pointer;
 }
 
+.button__noText {
+  width: 28px;
+  height: 28px;
+
+  .button__icon {
+    position: relative;
+    left: 0;
+  }
+}
+
 .button__text {
   font-weight: 600;
   font-size: 13px;
