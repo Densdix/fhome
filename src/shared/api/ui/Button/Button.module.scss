@@ -1,45 +1,27 @@
 .button {
-  width: 148px;
-  height: 40px;
   border: none;
   border-radius: 8px;
   display: flex;
   align-items: center;
-  justify-content: center;
   gap: 8px;
   position: relative;
   
   cursor: pointer;
 }
 
-.button__noText {
-  width: 28px;
-  height: 28px;
+.button--filled, .button--outlined {
+  width: 148px;
+  height: 40px;
+
+  justify-content: center;
+
+  .button__text {
+    font-size: 13px;
+  }
 
   .button__icon {
-    position: relative;
-    left: 0;
+    left: 14px;
   }
-}
-
-.button__text {
-  font-weight: 600;
-  font-size: 13px;
-  line-height: 20px;
-  letter-spacing: 0.48px;
-  text-align: center;
-  vertical-align: middle;
-}
-
-.button__icon {
-  width: 16px;
-  height: 16px;
-  opacity: 0.9;
-  position: absolute;
-  left: 14px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
 }
 
 .button--filled {
@@ -56,7 +38,7 @@
   }
 }
 
-.button--outlined {
+.button--outlined, .button--fluttened {
   background-color: #fff;
   border: 1px solid #cccccc;
   color: #3b3b3b;
@@ -82,4 +64,49 @@
       color: #6244e6;
     }
   }
+}
+
+.button--fluttened {
+  width: 73px;
+  height: 28px;
+  font-size: 11px;
+
+  justify-content: end;
+  padding-right: 8px;
+
+  .button__text {
+    font-size: 11px;
+  }
+
+  .button__icon {
+    left: 8px;
+  }
+}
+
+.button__noText {
+  width: 28px;
+  height: 28px;
+
+  .button__icon {
+    position: relative;
+    left: 0;
+  }
+}
+
+.button__text {
+  font-weight: 600;
+  line-height: 20px;
+  letter-spacing: 0.48px;
+  text-align: center;
+  vertical-align: middle;
+}
+
+.button__icon {
+  width: 16px;
+  height: 16px;
+  opacity: 0.9;
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }

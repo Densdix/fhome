@@ -2,11 +2,17 @@ import { addImage, get, remove, removeImage, update, getContact, updateContact }
 import { ICompany, IContact } from "@/entities/company/types";
 import { auth } from "@/shared/api/auth";
 import { useState, FormEvent, useEffect } from "react";
+import Button from "@/shared/api/ui/Button/Button";
+
 const Main = () => {
     return (
         <div>
-            <Authenticate />
-            <Company />
+            <Button variant="fluttened" icon="add" text="Label" />
+            <Button variant="filled" icon="add" text="Label" />
+            <Button variant="outlined" icon="add" text="Label" />
+            <Button variant="filled" icon="trash" />
+            {/* <Authenticate />
+            <Company /> */}
         </div>
     );
 };
