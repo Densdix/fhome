@@ -25,48 +25,45 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
-._icon-config:before {
+._icon-trash:before {
   content: "\e900";
 }
-._icon-contractor:before {
-  content: "\e901";
+._icon-settings:before {
+  content: "\e909";
 }
-._icon-edit:before {
+._icon-check:before {
   content: "\e902";
 }
-._icon-inventory:before {
+._icon-chevron:before {
   content: "\e903";
 }
-._icon-logo:before {
-  content: "\e904";
-}
-._icon-share:before {
+._icon-company:before {
   content: "\e905";
 }
-._icon-signOutlogin:before {
+._icon-contractor:before {
   content: "\e906";
 }
-._icon-trash:before {
+._icon-edit:before {
   content: "\e907";
 }
+._icon-share:before {
+  content: "\e90b";
+}
+._icon-signOut:before {
+  content: "\e90c";
+}
 ._icon-x:before {
-  content: "\e908";
+  content: "\e90e";
+}
+._icon-addPhoto:before {
+  content: "\e901";
 }
 ._icon-account:before {
-  content: "\e909";
+  content: "\e904";
+}
+._icon-logo:before {
+  content: "\e908";
 }
 ._icon-add:before {
   content: "\e90a";
-}
-._icon-addPhoto:before {
-  content: "\e90b";
-}
-._icon-check:before {
-  content: "\e90c";
-}
-._icon-chevron:before {
-  content: "\e90d";
-}
-._icon-companycase:before {
-  content: "\e90e";
 }
