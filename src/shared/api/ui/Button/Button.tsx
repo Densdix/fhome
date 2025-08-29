@@ -21,7 +21,7 @@ const Button: React.FC<Props> = ({ variant, text, onClick, icon }) => {
 
   return (
     <button className={buttonClass} onClick={onClick}>
-      <span className={`${styles.button__icon} _icon-${icon}`}></span>
+      {icon && <span className={`${styles.button__icon} _icon-${icon}`}></span>}
       <span className={styles.button__text_container}>
         {text && <span className={styles.button__text}>{text}</span>}
       </span>
