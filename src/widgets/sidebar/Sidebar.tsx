@@ -11,7 +11,7 @@ const Sidebar = () => {
       <div className={styles.sidebar__content}>
         <Button variant="filled" text="Organizations" icon="company" />
         <Button variant="outlined" text="Contractors" icon="contractor" />
-        <Button variant="outlined" text="Clients" icon="add" />
+        <Button variant="outlined" text="Clients" icon="social" />
       </div>
       <div className={styles.sidebar__footer}>
         <div className={styles.sidebar__footer__text}>

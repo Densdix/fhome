@@ -6,12 +6,67 @@ import { useState } from "react";
 import CardLabel from "@/shared/api/ui/Card/CardLabel";
 import styles from "./Contact.module.scss";
 import Button from "@/shared/api/ui/Button/Button";
+import { contactStore } from "./store";
+import { observer } from "mobx-react-lite";
+import { updateContact } from "@/entities/contact/api";
 
-const Contact = () => {
+const Contact = observer(() => {
   const [isEditing, setIsEditing] = useState(false);
-  const [responsiblePerson, setResponsiblePerson] = useState("");
-  const [phoneNumber, setPhoneNumber] = useState("");
-  const [email, setEmail] = useState("");
+
+  const contact = contactStore.getContact();
+
+  if (!contact) return null;
+
+  const {
+    firstname: initialFirstname,
+    lastname: initialLastname,
+    phone: initialPhone,
+    email: initialEmail,
+  } = contact;
+  const [firstname, setFirstname] = useState(initialFirstname);
+  const [lastname, setLastname] = useState(initialLastname);
+  const [phone, setPhone] = useState(initialPhone);
+  const [email, setEmail] = useState(initialEmail);
+
+  const onSave = () => {
+    updateContact(contact.id, {
+      firstname,
+      lastname,
+      phone,
+      email,
+    }).then(() => {
+      contactStore.updateContact({
+        ...contact,
+        firstname,
+        lastname,
+        phone,
+        email,
+      });
+      setIsEditing(false);
+    });
+  };
+
+  const onCancel = () => {
+    setFirstname(initialFirstname);
+    setLastname(initialLastname);
+    setPhone(initialPhone);
+    setEmail(initialEmail);
+    setIsEditing(false);
+  };
+
+  const onResponsiblePersonChange = (value: string) => {
+    const [firstname, lastname] = value.split(" ");
+    setFirstname(firstname);
+    setLastname(lastname);
+  };
+
+  const onPhoneNumberChange = (value: string) => {
+    setPhone(value);
+  };
+
+  const onEmailChange = (value: string) => {
+    setEmail(value);
+  };
 
   return (
     <CardContainer>
@@ -25,13 +80,13 @@ const Contact = () => {
                   variant="fluttened"
                   text="Save changes"
                   icon="check"
-                  onClick={() => setIsEditing(false)}
+                  onClick={onSave}
                 />
                 <Button
                   variant="fluttened"
                   text="Cancel"
                   icon="x"
-                  onClick={() => setIsEditing(false)}
+                  onClick={onCancel}
                 />
               </>
             ) : (
@@ -54,11 +109,13 @@ const Contact = () => {
             {isEditing ? (
               <Input
                 placeholder="Enter responsible person name"
-                value={responsiblePerson}
-                onChange={(e) => setResponsiblePerson(e.target.value)}
+                value={`${firstname} ${lastname}`}
+                onChange={(e) => onResponsiblePersonChange(e.target.value)}
               />
             ) : (
-              <div className={styles.text}>{responsiblePerson || "-"}</div>
+              <div className={styles.text}>
+                {firstname && lastname ? `${firstname} ${lastname}` : "-"}
+              </div>
             )}
           </div>
         </CardRow>
@@ -70,11 +127,11 @@ const Contact = () => {
             {isEditing ? (
               <Input
                 placeholder="Enter phone number"
-                value={phoneNumber}
-                onChange={(e) => setPhoneNumber(e.target.value)}
+                value={phone}
+                onChange={(e) => onPhoneNumberChange(e.target.value)}
               />
             ) : (
-              <div className={styles.text}>{phoneNumber || "-"}</div>
+              <div className={styles.text}>{phone || "-"}</div>
             )}
           </div>
         </CardRow>
@@ -87,7 +144,7 @@ const Contact = () => {
               <Input
                 placeholder="Enter email"
                 value={email}
-                onChange={(e) => setEmail(e.target.value)}
+                onChange={(e) => onEmailChange(e.target.value)}
               />
             ) : (
               <div className={styles.text}>{email || "-"}</div>
@@ -97,6 +154,6 @@ const Contact = () => {
       </div>
     </CardContainer>
   );
-};
+});
 
 export default Contact;

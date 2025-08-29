@@ -1,4 +1,5 @@
 import styles from "./Mainbar.module.scss";
+import logo from "@/assets/logo.svg";
 
 const Mainbar = () => {
   return (
@@ -8,7 +9,7 @@ const Mainbar = () => {
           <ul className={styles.mainBar__navList}>
             <li className={styles.mainBar__navTopItem}>
               <a href="#" className={styles.logo}>
-                <span className={"_icon-logo"}></span>
+                <img src={logo} alt="logo" />
               </a>
             </li>
             <li className={styles.mainBar__navTopItem}>
@@ -18,7 +19,7 @@ const Mainbar = () => {
             </li>
             <li className={styles.mainBar__navTopItem}>
               <a href="#" className={styles.mainBar__navLink}>
-                <span className={"_icon-contractor"}></span>
+                <span className={"_icon-search"}></span>
               </a>
             </li>
           </ul>

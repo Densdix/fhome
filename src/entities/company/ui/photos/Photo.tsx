@@ -2,12 +2,12 @@ import Button from "@/shared/api/ui/Button/Button";
 import styles from "./Photo.module.scss";
 
 interface PhotoProps {
-  id: number;
+  name: string;
   url: string;
-  onDelete: (id: number) => void;
+  onDelete: (name: string) => void;
 }
 
-const Photo = ({ id, url, onDelete }: PhotoProps) => {
+const Photo = ({ name, url, onDelete }: PhotoProps) => {
   return (
     <div className={styles.photo}>
       <img 
@@ -19,7 +19,7 @@ const Photo = ({ id, url, onDelete }: PhotoProps) => {
         <Button
           variant="filled"
           icon="trash"
-          onClick={() => onDelete(id)}
+          onClick={() => onDelete(name)}
         />
       </div>
     </div>

@@ -6,6 +6,12 @@
     gap: 16px;
 }
 
+.text {
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 24px;
+}
+
 .column__first {
     width: 172px;
 }
@@ -37,4 +43,5 @@
 
 .slash {
     color: variables.$gray;
+    margin: 0 12px;
 }

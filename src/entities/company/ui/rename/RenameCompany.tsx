@@ -3,25 +3,30 @@ import Modal from "@/shared/api/ui/Modal/Modal";
 import Button from "@/shared/api/ui/Button/Button";
 import Input from "@/shared/api/ui/Input/Input";
 import styles from "./RenameCompany.module.scss";
+import { observer } from "mobx-react-lite";
+import { companyStore } from "@/entities/company/store";
+import { update } from "@/entities/company/api";
 
 interface RenameCompanyProps {
   isOpen: boolean;
   onClose: () => void;
 }
 
-const RenameCompany = ({ isOpen, onClose }: RenameCompanyProps) => {
-  const [newName, setNewName] = useState("");
+const RenameCompany = observer(({ isOpen, onClose }: RenameCompanyProps) => {
+  const company = companyStore.getCompany();
+  const [newName, setNewName] = useState(company?.name || "");
 
   const onCancel = () => {
-    console.log("Cancel");
     onClose();
-    setNewName("");
+    setNewName(company?.name || "");
   };
 
   const onRename = () => {
-    console.log("Rename to:", newName);
+    if (!company) return;
     onClose();
-    setNewName("");
+    update(company.id, { name: newName }).then(() => {
+      companyStore.updateCompany({ ...company, name: newName });
+    });
   };
 
   return (
@@ -46,6 +51,6 @@ const RenameCompany = ({ isOpen, onClose }: RenameCompanyProps) => {
       </div>
     </Modal>
   );
-};
+});
 
 export default RenameCompany;

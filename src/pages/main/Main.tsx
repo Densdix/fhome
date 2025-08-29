@@ -4,6 +4,7 @@ import Sidebar from "@/widgets/sidebar/Sidebar";
 import Company from "@/widgets/company/Company";
 
 const Main = () => {
+
   return (
     <div className={styles.container}>
       <div className={styles.container__mainBar}>
@@ -13,7 +14,7 @@ const Main = () => {
         <Sidebar />
       </div>
       <div className={styles.container__content}>
-        <Company />
+        <Company companyId={12} contactId={16} />
       </div>
     </div>
   );

@@ -1,5 +1,5 @@
 import { $authHost } from '@/shared/api/requestSetup';
-import { ICompany } from './types';
+import { ICompany, IPhoto } from './types';
 
 export const create = async (body: ICompany): Promise<ICompany> => {
     const { data } =  await $authHost.post('/companies', body);
@@ -21,7 +21,7 @@ export const remove = async (id: number): Promise<boolean> => {
     return res.status === 200;
 };
 
-export const addImage = async (id: number, image: File): Promise<string> => {
+export const addImage = async (id: number, image: File): Promise<IPhoto> => {
     const formData = new FormData();
     formData.append('file', image);
     const { data } = await $authHost.post(`/companies/${id}/image`, formData, {

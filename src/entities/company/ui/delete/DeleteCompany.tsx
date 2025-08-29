@@ -1,6 +1,7 @@
 import Modal from "@/shared/api/ui/Modal/Modal";
 import Button from "@/shared/api/ui/Button/Button";
 import styles from "./DeleteCompany.module.scss";
+import { companyStore } from "../../store";
 
 interface DeleteCompanyProps {
   isOpen: boolean;
@@ -15,7 +16,7 @@ const DeleteCompany = ({ isOpen, onClose }: DeleteCompanyProps) => {
   };
 
   const onRemove = () => {
-    console.log("Remove");
+    companyStore.deleteCompany();
     onClose();
   };
 
