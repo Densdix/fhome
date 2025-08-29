@@ -10,7 +10,9 @@ import { useNavigate } from "react-router";
 const Login = () => {
   const [email, setEmail] = useState("");
   const navigate = useNavigate();
-  const onLogin = () => {
+  
+  const onLogin = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
     auth(email).then((res) => {
       if (res) {
         navigate("/");
@@ -22,14 +24,14 @@ const Login = () => {
     <div className={styles.login}>
       <div className={styles.login__container}>
         <CardContainer>
-          <div className={styles.login__container__form}>
+          <form onSubmit={onLogin} className={styles.login__container__form}>
             <CardRow>
               <Input placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} />
             </CardRow>
           <CardRow>
-              <Button variant="filled" onClick={onLogin} text="Login" />
+              <Button variant="filled" text="Login" />
             </CardRow>
-          </div>
+          </form>
         </CardContainer>
       </div>
     </div>
