@@ -135,14 +135,14 @@ const Card: React.FC<CardProps> = ({ title, rows, onSave }) => {
             <>
               <Button
                 variant="fluttened"
-                text="Save"
+                text="Save changes"
                 icon="check"
                 onClick={handleSave}
               />
               <Button
                 variant="fluttened"
                 text="Cancel"
-                icon="close"
+                icon="x"
                 onClick={handleCancel}
               />
             </>
