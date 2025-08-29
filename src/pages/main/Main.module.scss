@@ -1,5 +1,10 @@
 .container {
   display: flex;
-  flex-direction: column;
-  gap: 20px;
+
+  &__content {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin-top: 40px;
+  }
 }
