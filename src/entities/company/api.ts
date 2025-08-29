@@ -1,5 +1,5 @@
 import { $authHost } from '@/shared/api/requestSetup';
-import { ICompany, IContact } from './types';
+import { ICompany } from './types';
 
 export const create = async (body: ICompany): Promise<ICompany> => {
     const { data } =  await $authHost.post('/companies', body);
@@ -36,14 +36,3 @@ export const removeImage = async (id: number, imageName: string): Promise<boolea
     const res =  await $authHost.delete(`/companies/${id}/image/${imageName}`);
     return res.status === 200;
 };
-
-export const getContact = async (id: number): Promise<IContact> => {
-    const { data } = await $authHost.get(`/contacts/${id}`);
-    return data;
-};
-
-export const updateContact = async (id: number, body: Partial<IContact>): Promise<IContact> => {
-    const { data } = await $authHost.patch(`/contacts/${id}`, body);
-    return data;
-};
-
