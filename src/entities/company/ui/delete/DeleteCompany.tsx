@@ -2,6 +2,7 @@ import Modal from "@/shared/api/ui/Modal/Modal";
 import Button from "@/shared/api/ui/Button/Button";
 import styles from "./DeleteCompany.module.scss";
 import { companyStore } from "../../store";
+import { remove } from "../../api";
 
 interface DeleteCompanyProps {
   isOpen: boolean;
@@ -10,14 +11,22 @@ interface DeleteCompanyProps {
 
 const DeleteCompany = ({ isOpen, onClose }: DeleteCompanyProps) => {
 
+  const company = companyStore.getCompany();
+
   const onCancel = () => {
-    console.log("Cancel");
     onClose();
   };
 
   const onRemove = () => {
-    companyStore.deleteCompany();
-    onClose();
+    if (!company) return;
+    remove(company.id).then((res: boolean | Error) => {
+      if (res instanceof Error) {
+        console.error('Error removing company:', res);
+        return;
+      }
+      companyStore.deleteCompany();
+      onClose();
+    });
   };
 
   return (

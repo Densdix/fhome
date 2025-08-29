@@ -43,7 +43,11 @@ const CompanyPhotos = observer(() => {
     const formData = new FormData();
     formData.append("file", file);
     formData.append("company_id", company.id.toString());
-    addImage(company.id, file).then((res: IPhoto) => {
+    addImage(company.id, file).then((res: IPhoto | Error) => {
+      if (res instanceof Error) {
+        console.error('Error adding image:', res);
+        return;
+      }
       companyStore.updateCompany({
         ...company,
         photos: [

@@ -6,6 +6,7 @@ import styles from "./RenameCompany.module.scss";
 import { observer } from "mobx-react-lite";
 import { companyStore } from "@/entities/company/store";
 import { update } from "@/entities/company/api";
+import { ICompany } from "../../types";
 
 interface RenameCompanyProps {
   isOpen: boolean;
@@ -24,7 +25,11 @@ const RenameCompany = observer(({ isOpen, onClose }: RenameCompanyProps) => {
   const onRename = () => {
     if (!company) return;
     onClose();
-    update(company.id, { name: newName }).then(() => {
+    update(company.id, { name: newName }).then((res: ICompany | Error) => {
+      if (res instanceof Error) {
+        console.error('Error renaming company:', res);
+        return;
+      }
       companyStore.updateCompany({ ...company, name: newName });
     });
   };

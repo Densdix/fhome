@@ -10,7 +10,7 @@ import Button from "@/shared/api/ui/Button/Button";
 import { companyStore } from "@/entities/company/store";
 import { observer } from "mobx-react-lite";
 import { formatDateForInput, snakeToRegular } from "./lib";
-import { IContract } from "@/entities/company/types";
+import { ICompany, IContract } from "@/entities/company/types";
 import { update } from "@/entities/company/api";
 import { useEffect, useState } from "react";
 
@@ -49,7 +49,11 @@ const CompanyDetailsEdit = observer(
         contract,
         businessEntity,
         type,
-      }).then(() => {
+      }).then((res: ICompany | Error) => {
+        if (res instanceof Error) {
+          console.error('Error updating company:', res);
+          return;
+        }
         companyStore.updateCompany({
           ...company,
           contract,

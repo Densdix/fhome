@@ -28,10 +28,16 @@ const Company = observer(({ companyId, contactId }: CompanyProps) => {
       setIsLoading(true);
       setError(null);
 
-      const company = await getCompany(companyId);
-      const contacts = await getContact(contactId);
-      companyStore.setCompany(company);
-      contactStore.setContact(contacts);
+      const resCompany = await getCompany(companyId);
+      if (resCompany instanceof Error) {
+        throw resCompany;
+      }
+      const resContact = await getContact(contactId);
+      if (resContact instanceof Error) {
+        throw resContact;
+      }
+      companyStore.setCompany(resCompany);
+      contactStore.setContact(resContact);
     } catch (err) {
       setError("Failed to load company data");
       console.error("Error fetching company:", err);
