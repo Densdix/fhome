@@ -41,16 +41,12 @@
   position: absolute;
   right: 12px;
   top: 50%;
-  transform: translateY(-50%) rotate(-90deg);
+  transform: translateY(-50%);
   pointer-events: none;
-  width: 20px;
-  height: 20px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
   transition: transform 0.2s ease;
+  transform: translateY(-50%) rotate(-90deg);
 
-  &__open {
+  &.rotated {
     transform: translateY(-50%) rotate(90deg);
   }
 }

@@ -46,7 +46,9 @@ const MultiSelect: React.FC<Props> = ({ placeholder, value = [], onChange, class
     <div className={styles.multiSelectWrapper} ref={dropdownRef}>
       <div className={selectClass} onClick={() => setIsOpen(!isOpen)}>
         <span className={styles.multiSelect__text}>{displayText}</span>
-        <span className={`${styles.chevron} ${isOpen ? styles.chevron__open : ''}`} />
+        <div className={`${styles.chevron} ${isOpen ? styles.rotated : ''}`}>
+          <span className='_icon-chevron' />
+        </div>
       </div>
       {isOpen && (
         <div className={styles.multiSelect__dropdown}>
