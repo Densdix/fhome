@@ -4,12 +4,11 @@ import styles from './Modal.module.scss';
 type ModalProps = {
   isOpen: boolean;
   onClose: () => void;
-  title?: string;
   children: React.ReactNode;
   className?: string;
 };
 
-const Modal: React.FC<ModalProps> = ({ isOpen, onClose, title, children, className }) => {
+const Modal: React.FC<ModalProps> = ({ isOpen, onClose, children, className }) => {
   const modalRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -40,11 +39,7 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose, title, children, classNa
         onClick={(e) => e.stopPropagation()}
         role="dialog"
         aria-modal="true"
-        aria-labelledby={title ? 'modal-title' : undefined}
       >
-        <div className={styles.modal__header}>
-          {title && <h2 id="modal-title" className={styles.modal__title}>{title}</h2>}
-        </div>
         <div className={styles.modal__body}>
           {children}
         </div>
