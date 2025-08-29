@@ -1,6 +1,6 @@
-import styles from "./MainBar.module.scss";
+import styles from "./Mainbar.module.scss";
 
-const MainBar = () => {
+const Mainbar = () => {
   return (
     <div className={styles.mainBar}>
       <nav className={styles.mainBar__nav}>
@@ -43,4 +43,4 @@ const MainBar = () => {
   );
 };
 
-export default MainBar;
+export default Mainbar;
