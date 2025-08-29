@@ -1,5 +1,4 @@
-$gray: #808080;
-$black: #333333;
+@use '@/_variables.scss';
 
 .card {
   background-color: #fff;
@@ -19,7 +18,7 @@ $black: #333333;
 .card__title {
   font-size: 18px;
   font-weight: 600;
-  color: $black;
+  color: variables.$black;
   margin: 0;
 }
 
@@ -41,7 +40,7 @@ $black: #333333;
 
 .card__label {
   font-size: 13px;
-  color: $gray;
+  color: variables.$gray;
   padding-top: 0;
   width: 100%;
   white-space: nowrap;
@@ -50,7 +49,7 @@ $black: #333333;
 .card__value {
   flex: 1;
   font-size: 14px;
-  color: $black;
+  color: variables.$black;
 }
 
 .card__multiInput {
@@ -68,10 +67,10 @@ $black: #333333;
 .card__multiInputLabel {
   min-width: 60px;
   font-size: 13px;
-  color: $gray;
+  color: variables.$gray;
 }
 
 .card__multiInputSeparator {
   font-size: 13px;
-  color: $gray;
+  color: variables.$gray;
 }   
