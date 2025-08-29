@@ -21,8 +21,8 @@ const CompanyDetails = () => {
         title="Details"
         isEditing={isEditing}
         onEdit={() => setIsEditing(true)}
-        onSave={() => {}}
-        onCancel={() => {}}
+        onSave={() => setIsEditing(false)}
+        onCancel={() => setIsEditing(false)}
       />
       <div className={styles.rows}>
         <CardRow>
@@ -32,25 +32,33 @@ const CompanyDetails = () => {
           <div
             className={`${styles.column__second} ${styles.agreement__container}`}
           >
-            <div className={styles.agreement__input}>
-              <Input
-                placeholder="0000/0-00"
-                value={agreementNumber}
-                onChange={(e) => setAgreementNumber(e.target.value)}
-              />
-            </div>
-            <div className={styles.agreement__date}>
-              <div className={styles.agreement__dateLabel}>
-                <CardLabel label="Date:" />
+            {isEditing ? (
+              <>
+                <div className={styles.agreement__input}>
+                  <Input
+                    placeholder="0000/0-00"
+                    value={agreementNumber}
+                    onChange={(e) => setAgreementNumber(e.target.value)}
+                  />
+                </div>
+                <div className={styles.agreement__date}>
+                  <div className={styles.agreement__dateLabel}>
+                    <CardLabel label="Date:" />
+                  </div>
+                  <div className={styles.agreement__input}>
+                    <Input
+                      placeholder="dd.mm.yyyy"
+                      value={agreementDate}
+                      onChange={(e) => setAgreementDate(e.target.value)}
+                    />
+                  </div>
+                </div>
+              </>
+            ) : (
+              <div className={styles.text}>
+                {agreementNumber || "-"} {agreementDate && `${<span className={styles.slash}>/</span> } ${agreementDate}`}
               </div>
-              <div className={styles.agreement__input}>
-                <Input
-                  placeholder="dd.mm.yyyy"
-                  value={agreementDate}
-                  onChange={(e) => setAgreementDate(e.target.value)}
-                />
-              </div>
-            </div>
+            )}
           </div>
         </CardRow>
         <CardRow>
@@ -58,15 +66,19 @@ const CompanyDetails = () => {
             <CardLabel label="Buisness entity:" />
           </div>
           <div className={styles.column__second}>
-            <Select
-              value={buisnessEntity}
-              onChange={(value) => setBuisnessEntity(value)}
-              options={[
-                { value: "1", label: "1" },
-                { value: "2", label: "2" },
-                { value: "3", label: "3" },
-              ]}
-            />
+            {isEditing ? (
+              <Select
+                value={buisnessEntity}
+                onChange={(value) => setBuisnessEntity(value)}
+                options={[
+                  { value: "1", label: "1" },
+                  { value: "2", label: "2" },
+                  { value: "3", label: "3" },
+                ]}
+              />
+            ) : (
+              <div className={styles.text}>{buisnessEntity || "-"}</div>
+            )}
           </div>
         </CardRow>
         <CardRow>
@@ -74,15 +86,21 @@ const CompanyDetails = () => {
             <CardLabel label="Company type:" />
           </div>
           <div className={styles.column__second}>
-            <MultiSelect
-              value={companyType}
-              onChange={(values) => setCompanyType(values)}
-              options={[
-                { value: "1", label: "1" },
-                { value: "2", label: "2" },
-                { value: "3", label: "3" },
-              ]}
-            />
+            {isEditing ? (
+              <MultiSelect
+                value={companyType}
+                onChange={(values) => setCompanyType(values)}
+                options={[
+                  { value: "1", label: "1" },
+                  { value: "2", label: "2" },
+                  { value: "3", label: "3" },
+                ]}
+              />
+            ) : (
+              <div className={styles.text}>
+                {companyType.length > 0 ? companyType.join(", ") : "-"}
+              </div>
+            )}
           </div>
         </CardRow>
       </div>
