@@ -1,4 +1,4 @@
-import Card from "@/shared/api/ui/Card/CardContainer";
+import CardContainer from "@/shared/api/ui/Card/CardContainer";
 import CardHeader from "@/shared/api/ui/Card/CardHeader";
 import CardRow from "@/shared/api/ui/Card/CardRow";
 import Input from "@/shared/api/ui/Input/Input";
@@ -16,7 +16,7 @@ const CompanyDetails = () => {
   const [companyType, setCompanyType] = useState<string[]>([]);
 
   return (
-    <Card>
+    <CardContainer>
       <CardHeader
         title="Details"
         isEditing={isEditing}
@@ -104,7 +104,7 @@ const CompanyDetails = () => {
           </div>
         </CardRow>
       </div>
-    </Card>
+    </CardContainer>
   );
 };
 

@@ -1,4 +1,4 @@
-import Card from "@/shared/api/ui/Card/CardContainer";
+import CardContainer from "@/shared/api/ui/Card/CardContainer";
 import CardHeader from "@/shared/api/ui/Card/CardHeader";
 import CardRow from "@/shared/api/ui/Card/CardRow";
 import Input from "@/shared/api/ui/Input/Input";
@@ -13,7 +13,7 @@ const Contact = () => {
   const [email, setEmail] = useState("");
 
   return (
-    <Card>
+    <CardContainer>
       <CardHeader
         title="Contact Information"
         isEditing={isEditing}
@@ -71,7 +71,7 @@ const Contact = () => {
           </div>
         </CardRow>
       </div>
-    </Card>
+    </CardContainer>
   );
 };
 

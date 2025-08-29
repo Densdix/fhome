@@ -5,7 +5,7 @@ type CardProps = {
   children: ReactNode;
 };
 
-const Card: FC<CardProps> = ({ children }) => {
+const CardContainer: FC<CardProps> = ({ children }) => {
   return (
     <div className={styles.card}>
       {children}
@@ -13,4 +13,4 @@ const Card: FC<CardProps> = ({ children }) => {
   );
 };
 
-export default Card; 
+export default CardContainer; 
