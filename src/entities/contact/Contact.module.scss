@@ -1,0 +1,20 @@
+.rows {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 16px;
+}
+
+.column__first {
+  min-width: 200px;
+}
+
+.column__second {
+  flex: 1;
+}
+
+.text {
+  color: var(--text-primary);
+  font-size: 14px;
+  line-height: 20px;
+}
