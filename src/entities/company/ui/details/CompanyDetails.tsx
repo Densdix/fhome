@@ -6,7 +6,7 @@ import styles from "./CompanyDetails.module.scss";
 import Button from "@/shared/api/ui/Button/Button";
 import { companyStore } from "@/entities/company/store";
 import { observer } from "mobx-react-lite";
-import { formatDate, snakeToRegular } from "./lib";
+import { formatDateForDisplay, snakeToRegular } from "./lib";
 import CompanyDetailsEdit from "./CompanyDetailsEdit";
 import { useState, useEffect } from "react";
 
@@ -15,13 +15,13 @@ const CompanyDetails = observer(() => {
   const { contract, businessEntity, type } = company || {};
   const { no, issue_date } = contract || {};
   const [isEditing, setIsEditing] = useState(false);
-  const [date, setDate] = useState<string | undefined>(formatDate(issue_date));
+  const [date, setDate] = useState<string | undefined>(issue_date ? formatDateForDisplay(issue_date) : undefined);
   const [types, setTypes] = useState<{ value: string; label: string }[] | undefined>(
     type?.map((type: string) => ({ value: type, label: snakeToRegular(type) }))
   );
 
   useEffect(() => {
-    setDate(formatDate(issue_date));
+    setDate(issue_date ? formatDateForDisplay(issue_date) : undefined);
     setTypes(type?.map((type: string) => ({ value: type, label: snakeToRegular(type) })));
   }, [issue_date, type]);
 

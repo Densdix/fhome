@@ -1,9 +1,11 @@
-export const formatDate = (dateString: string | undefined) => {
-  if (!dateString) return "";
-  const date = new Date(dateString);
-  const day = date.getDate().toString().padStart(2, "0");
-  const month = (date.getMonth() + 1).toString().padStart(2, "0");
-  const year = date.getFullYear();
+export const formatDateForInput = (dateString: string) => {
+  if (!dateString) return '';
+  return dateString.split('T')[0];
+};
+
+export const formatDateForDisplay = (dateString: string) => {
+  if (!dateString) return '';
+  const [year, month, day] = dateString.split('T')[0].split('-');
   return `${day}.${month}.${year}`;
 };
 

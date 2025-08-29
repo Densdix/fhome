@@ -9,7 +9,7 @@ import styles from "./CompanyDetails.module.scss";
 import Button from "@/shared/api/ui/Button/Button";
 import { companyStore } from "@/entities/company/store";
 import { observer } from "mobx-react-lite";
-import { formatDate, snakeToRegular } from "./lib";
+import { formatDateForInput, snakeToRegular } from "./lib";
 import { IContract } from "@/entities/company/types";
 import { update } from "@/entities/company/api";
 import { useEffect, useState } from "react";
@@ -141,8 +141,9 @@ const CompanyDetailsEdit = observer(
                 </div>
                 <div className={styles.agreement__input}>
                   <Input
-                    placeholder="dd.mm.yyyy"
-                    value={formatDate(contract.issue_date)}
+                    type="date"
+                    placeholder="YYYY-MM-DD"
+                    value={formatDateForInput(contract.issue_date)}
                     onChange={(e) => onAgreementDateChange(e.target.value)}
                   />
                 </div>

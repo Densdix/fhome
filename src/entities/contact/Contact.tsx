@@ -2,16 +2,20 @@ import CardContainer from "@/shared/api/ui/Card/CardContainer";
 import CardHeader from "@/shared/api/ui/Card/CardHeader";
 import CardRow from "@/shared/api/ui/Card/CardRow";
 import Input from "@/shared/api/ui/Input/Input";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import CardLabel from "@/shared/api/ui/Card/CardLabel";
 import styles from "./Contact.module.scss";
 import Button from "@/shared/api/ui/Button/Button";
 import { contactStore } from "./store";
 import { observer } from "mobx-react-lite";
 import { updateContact } from "@/entities/contact/api";
+import { convertToInitialPhoneFormat, formatPhoneNumber } from "./lib";
+import { validateEmail, validatePhone } from "./lib";
 
 const Contact = observer(() => {
   const [isEditing, setIsEditing] = useState(false);
+  const [emailError, setEmailError] = useState("");
+  const [phoneError, setPhoneError] = useState("");
 
   const contact = contactStore.getContact();
 
@@ -23,23 +27,34 @@ const Contact = observer(() => {
     phone: initialPhone,
     email: initialEmail,
   } = contact;
-  const [firstname, setFirstname] = useState(initialFirstname);
-  const [lastname, setLastname] = useState(initialLastname);
-  const [phone, setPhone] = useState(initialPhone);
+  const [name, setName] = useState(`${initialFirstname} ${initialLastname}`);
+  const [phone, setPhone] = useState("");
   const [email, setEmail] = useState(initialEmail);
 
   const onSave = () => {
+    const emailValidation = validateEmail(email);
+    const phoneValidation = validatePhone(phone);
+
+    setEmailError(emailValidation);
+    setPhoneError(phoneValidation);
+
+    if (emailValidation || phoneValidation) {
+      return;
+    }
+
+    const [firstname, lastname] = name.split(" ");
+
     updateContact(contact.id, {
       firstname,
       lastname,
-      phone,
+      phone: convertToInitialPhoneFormat(phone),
       email,
     }).then(() => {
       contactStore.updateContact({
         ...contact,
         firstname,
         lastname,
-        phone,
+        phone: convertToInitialPhoneFormat(phone),
         email,
       });
       setIsEditing(false);
@@ -47,26 +62,29 @@ const Contact = observer(() => {
   };
 
   const onCancel = () => {
-    setFirstname(initialFirstname);
-    setLastname(initialLastname);
+    setName(`${initialFirstname} ${initialLastname}`);
     setPhone(initialPhone);
     setEmail(initialEmail);
+    setEmailError("");
+    setPhoneError("");
     setIsEditing(false);
   };
 
   const onResponsiblePersonChange = (value: string) => {
-    const [firstname, lastname] = value.split(" ");
-    setFirstname(firstname);
-    setLastname(lastname);
+    setName(value);
   };
 
-  const onPhoneNumberChange = (value: string) => {
-    setPhone(value);
+  const onPhoneChange = (value: string) => {
+    setPhone(formatPhoneNumber(value));
   };
 
   const onEmailChange = (value: string) => {
     setEmail(value);
   };
+
+  useEffect(() => {
+    setPhone(formatPhoneNumber(initialPhone));
+  }, [initialPhone]);
 
   return (
     <CardContainer>
@@ -109,13 +127,11 @@ const Contact = observer(() => {
             {isEditing ? (
               <Input
                 placeholder="Enter responsible person name"
-                value={`${firstname} ${lastname}`}
+                value={name}
                 onChange={(e) => onResponsiblePersonChange(e.target.value)}
               />
             ) : (
-              <div className={styles.text}>
-                {firstname && lastname ? `${firstname} ${lastname}` : "-"}
-              </div>
+              <div className={styles.text}>{name}</div>
             )}
           </div>
         </CardRow>
@@ -125,11 +141,14 @@ const Contact = observer(() => {
           </div>
           <div className={styles.column__second}>
             {isEditing ? (
-              <Input
-                placeholder="Enter phone number"
-                value={phone}
-                onChange={(e) => onPhoneNumberChange(e.target.value)}
-              />
+              <div className={styles.inputContainer}>
+                <Input
+                  placeholder="Enter phone number"
+                  value={phone}
+                  onChange={(e) => onPhoneChange(e.target.value)}
+                />
+                {phoneError && <div className={styles.error}>{phoneError}</div>}
+              </div>
             ) : (
               <div className={styles.text}>{phone || "-"}</div>
             )}
@@ -141,11 +160,14 @@ const Contact = observer(() => {
           </div>
           <div className={styles.column__second}>
             {isEditing ? (
-              <Input
-                placeholder="Enter email"
-                value={email}
-                onChange={(e) => onEmailChange(e.target.value)}
-              />
+              <div className={styles.inputContainer}>
+                <Input
+                  placeholder="Enter email"
+                  value={email}
+                  onChange={(e) => onEmailChange(e.target.value)}
+                />
+                {emailError && <div className={styles.error}>{emailError}</div>}
+              </div>
             ) : (
               <div className={styles.text}>{email || "-"}</div>
             )}
