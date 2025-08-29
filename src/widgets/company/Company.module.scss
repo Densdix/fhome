@@ -1,13 +1,11 @@
 .company {
   display: flex;
+  position: relative;
 
-  &__sideActions {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 7px;
-    width: 90px;
-    gap: 10px;
+  &__backButton {
+    position: absolute;
+    top: 6px;
+    left: -76px;
   }
 
   &__main {

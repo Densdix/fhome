@@ -14,10 +14,8 @@ const Company = () => {
   return (
     <>
       <div className={styles.company}>
-        <div className={styles.company__sideActions}>
-          <div className={styles.company__sideActions__button}>
+        <div className={styles.company__backButton}>
             <IconButton icon="chevron" onClick={() => {}} />
-          </div>
         </div>
         <div className={styles.company__main}>
           <div className={styles.company__main__header}>
