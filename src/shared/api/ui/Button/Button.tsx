@@ -7,13 +7,15 @@ type Props = {
   text?: string;
   onClick?: () => void;
   icon?: string;
+  disabled?: boolean;
 };
 
-const Button: FC<Props> = ({ variant, text, onClick, icon }) => {
+const Button: FC<Props> = ({ variant, text, onClick, icon, disabled }) => {
   const buttonClass = [
     styles.button,
     variant && styles[`button--${variant}`],
     text ? styles['button--withText'] : styles['button--noText'],
+    disabled && styles['button--disabled']
   ]
     .filter(Boolean)
     .join(' ');
