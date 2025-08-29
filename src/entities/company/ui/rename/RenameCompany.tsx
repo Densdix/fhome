@@ -4,24 +4,28 @@ import Button from "@/shared/api/ui/Button/Button";
 import Input from "@/shared/api/ui/Input/Input";
 import styles from "./RenameCompany.module.scss";
 
-const RenameCompany = () => {
-  const [isOpen, setIsOpen] = useState(true);
+interface RenameCompanyProps {
+  isOpen: boolean;
+  onClose: () => void;
+}
+
+const RenameCompany = ({ isOpen, onClose }: RenameCompanyProps) => {
   const [newName, setNewName] = useState("");
 
   const onCancel = () => {
     console.log("Cancel");
-    setIsOpen(false);
+    onClose();
     setNewName("");
   };
 
   const onRename = () => {
     console.log("Rename to:", newName);
-    setIsOpen(false);
+    onClose();
     setNewName("");
   };
 
   return (
-    <Modal isOpen={isOpen} onClose={() => setIsOpen(false)}>
+    <Modal isOpen={isOpen} onClose={onClose}>
       <div>
         <div className={styles.renameCompany__header}>
           <h2 className={styles.renameCompany__title}>

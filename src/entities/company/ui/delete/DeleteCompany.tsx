@@ -1,23 +1,26 @@
-import { useState } from "react";
 import Modal from "@/shared/api/ui/Modal/Modal";
 import Button from "@/shared/api/ui/Button/Button";
 import styles from "./DeleteCompany.module.scss";
 
-const DeleteCompany = () => {
-  const [isOpen, setIsOpen] = useState(false);
+interface DeleteCompanyProps {
+  isOpen: boolean;
+  onClose: () => void;
+}
+
+const DeleteCompany = ({ isOpen, onClose }: DeleteCompanyProps) => {
 
   const onCancel = () => {
     console.log("Cancel");
-    setIsOpen(false);
+    onClose();
   };
 
   const onRemove = () => {
     console.log("Remove");
-    setIsOpen(false);
+    onClose();
   };
 
   return (
-    <Modal isOpen={isOpen} onClose={() => setIsOpen(false)}>
+    <Modal isOpen={isOpen} onClose={onClose}>
       <div>
         <div className={styles.deleteCompany__header}>
           <h2 className={styles.deleteCompany__title}>
