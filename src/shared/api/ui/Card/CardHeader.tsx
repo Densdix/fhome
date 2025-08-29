@@ -3,7 +3,7 @@ import styles from './index.module.scss';
 
 type CardHeaderProps = {
   title: string;
-  children: ReactNode;
+  children?: ReactNode;
 };
 
 const CardHeader: FC<CardHeaderProps> = ({
