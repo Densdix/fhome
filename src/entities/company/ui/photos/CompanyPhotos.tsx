@@ -61,6 +61,8 @@ const CompanyPhotos = observer(() => {
         ],
       });
       setIsUploading(false);
+    }).finally(() => {
+      setIsUploading(false);
     });
   };
 
