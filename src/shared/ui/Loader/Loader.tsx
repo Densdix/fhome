@@ -1,18 +1,14 @@
-import React from 'react';
-import './Loader.scss';
+import React from "react";
+import "./Loader.scss";
 
 interface LoaderProps {
-  size?: 'small' | 'medium' | 'large';
   color?: string;
 }
 
-export const Loader: React.FC<LoaderProps> = ({ 
-  size = 'medium',
-  color = '#000000'
-}) => {
+export const Loader: React.FC<LoaderProps> = ({ color = "#333333" }) => {
   return (
-    <div className={`loader loader--${size}`}>
+    <div className={`loader`}>
       <div className="loader__spinner" style={{ borderColor: color }} />
     </div>
   );
-}; 
+};

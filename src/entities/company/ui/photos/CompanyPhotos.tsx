@@ -83,7 +83,9 @@ const CompanyPhotos = observer(() => {
           children={
             <>
               {isUploading ? (
-                <Loader size="small" />
+                <div className={styles.photos__loader}>
+                  <Loader />
+                </div>
               ) : (
                 <Button
                   variant="fluttened"

@@ -19,7 +19,9 @@ const Photo = ({ name, url, onDelete, isDeleting }: PhotoProps) => {
       />
       <div className={styles.photo__deleteButton}>
         {isDeleting ? (
-          <Loader size="small" />
+          <div className={styles.photo__deleteButton__loader}>
+            <Loader />
+          </div>
         ) : (
           <Button
             variant="filled"
