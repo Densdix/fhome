@@ -1,26 +1,27 @@
 .button {
   border: none;
-  border-radius: 8px;
+  border-radius: 0.5rem;
   display: flex;
+  justify-content: space-between;
   align-items: center;
-  gap: 8px;
-  position: relative;
+  gap: 0.5rem;
   
   cursor: pointer;
+  transition: all 0.2s ease;
 }
 
 .button--filled, .button--outlined {
-  width: 148px;
-  height: 40px;
-
-  justify-content: center;
+  min-width: 9.25rem;
+  width: auto;
+  height: 2.5rem;
+  padding: 0 1rem;
 
   .button__text {
-    font-size: 13px;
+    font-size: 0.8125rem;
   }
 
   .button__icon {
-    left: 14px;
+    left: 0.875rem;
   }
 }
 
@@ -67,45 +68,47 @@
 }
 
 .button--fluttened {
-  width: 73px;
-  height: 28px;
-  font-size: 11px;
-
-  justify-content: end;
-  padding-right: 8px;
+  min-width: 4.5625rem;
+  width: auto;
+  height: 1.75rem;
+  font-size: 0.6875rem;
+  padding: 0 0.5rem;
 
   .button__text {
-    font-size: 11px;
+    font-size: 0.6875rem;
   }
 
   .button__icon {
-    left: 8px;
+    font-size: 1rem;
   }
 }
 
 .button__noText {
-  width: 28px;
-  height: 28px;
-
-  .button__icon {
-    position: relative;
-    left: 0;
-  }
+  width: 1.75rem;
+  height: 1.75rem;
+  min-width: 1.75rem;
 }
 
 .button__text {
   font-weight: 600;
-  line-height: 20px;
-  letter-spacing: 0.48px;
+  line-height: 1.25rem;
+  letter-spacing: 0.03rem;
   text-align: center;
   vertical-align: middle;
+  white-space: nowrap;
+}
+
+.button__text_container {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .button__icon {
-  width: 16px;
-  height: 16px;
+  width: 1rem;
+  height: 1rem;
   opacity: 0.9;
-  position: absolute;
   display: flex;
   align-items: center;
   justify-content: center;
