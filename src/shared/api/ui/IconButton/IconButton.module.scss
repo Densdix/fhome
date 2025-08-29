@@ -1,4 +1,7 @@
 .iconButton {
+    display: flex;
+    align-items: center;
+    justify-content: center;
     width: 32px;
     height: 32px;
     border-radius: 50%;
@@ -6,11 +9,12 @@
     background-color: transparent;
     cursor: pointer;
 
-    .iconButton__icon {
-        width: 16px;
-        height: 16px;
-
+    &__icon {
         font-size: 20px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        line-height: 1;
     }
 
     &:hover {
