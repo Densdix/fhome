@@ -1,6 +1,6 @@
-import Button from "@/shared/api/ui/Button/Button";
-import CardContainer from "@/shared/api/ui/Card/CardContainer";
-import CardHeader from "@/shared/api/ui/Card/CardHeader";
+import Button from "@/shared/ui/Button/Button";
+import CardContainer from "@/shared/ui/Card/CardContainer";
+import CardHeader from "@/shared/ui/Card/CardHeader";
 import styles from "./CompanyPhotos.module.scss";
 import Photo from "./Photo";
 import { observer } from "mobx-react-lite";

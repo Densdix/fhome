@@ -1,7 +1,7 @@
 import { useState } from "react";
-import Modal from "@/shared/api/ui/Modal/Modal";
-import Button from "@/shared/api/ui/Button/Button";
-import Input from "@/shared/api/ui/Input/Input";
+import Modal from "@/shared/ui/Modal/Modal";
+import Button from "@/shared/ui/Button/Button";
+import Input from "@/shared/ui/Input/Input";
 import styles from "./RenameCompany.module.scss";
 import { observer } from "mobx-react-lite";
 import { companyStore } from "@/entities/company/store";

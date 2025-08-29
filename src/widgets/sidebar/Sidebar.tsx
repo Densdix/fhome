@@ -1,4 +1,4 @@
-import Button from "@/shared/api/ui/Button/Button";
+import Button from "@/shared/ui/Button/Button";
 import styles from "./Sidebar.module.scss";
 
 const Sidebar = () => {

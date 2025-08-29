@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import styles from "./Company.module.scss";
-import IconButton from "@/shared/api/ui/IconButton/IconButton";
+import IconButton from "@/shared/ui/IconButton/IconButton";
 import CompanyDetails from "@/entities/company/ui/details/CompanyDetails";
 import CompanyPhotos from "@/entities/company/ui/photos/CompanyPhotos";
 import CompanyContacts from "@/entities/contact/Contact";

@@ -1,11 +1,11 @@
-import CardContainer from "@/shared/api/ui/Card/CardContainer";
-import CardHeader from "@/shared/api/ui/Card/CardHeader";
-import CardRow from "@/shared/api/ui/Card/CardRow";
-import Input from "@/shared/api/ui/Input/Input";
+import CardContainer from "@/shared/ui/Card/CardContainer";
+import CardHeader from "@/shared/ui/Card/CardHeader";
+import CardRow from "@/shared/ui/Card/CardRow";
+import Input from "@/shared/ui/Input/Input";
 import { useEffect, useState } from "react";
-import CardLabel from "@/shared/api/ui/Card/CardLabel";
+import CardLabel from "@/shared/ui/Card/CardLabel";
 import styles from "./Contact.module.scss";
-import Button from "@/shared/api/ui/Button/Button";
+import Button from "@/shared/ui/Button/Button";
 import { contactStore } from "./store";
 import { observer } from "mobx-react-lite";
 import { updateContact } from "@/entities/contact/api";

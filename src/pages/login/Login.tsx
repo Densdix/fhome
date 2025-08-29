@@ -1,8 +1,8 @@
-import CardContainer from "@/shared/api/ui/Card/CardContainer";
+import CardContainer from "@/shared/ui/Card/CardContainer";
 import styles from "./Login.module.scss";
-import CardRow from "@/shared/api/ui/Card/CardRow";
-import Input from "@/shared/api/ui/Input/Input";
-import Button from "@/shared/api/ui/Button/Button";
+import CardRow from "@/shared/ui/Card/CardRow";
+import Input from "@/shared/ui/Input/Input";
+import Button from "@/shared/ui/Button/Button";
 import { useState } from "react";
 import { auth } from "@/shared/api/auth";
 import { useNavigate } from "react-router";

@@ -1,9 +1,9 @@
-import CardContainer from "@/shared/api/ui/Card/CardContainer";
-import CardHeader from "@/shared/api/ui/Card/CardHeader";
-import CardRow from "@/shared/api/ui/Card/CardRow";
-import CardLabel from "@/shared/api/ui/Card/CardLabel";
+import CardContainer from "@/shared/ui/Card/CardContainer";
+import CardHeader from "@/shared/ui/Card/CardHeader";
+import CardRow from "@/shared/ui/Card/CardRow";
+import CardLabel from "@/shared/ui/Card/CardLabel";
 import styles from "./CompanyDetails.module.scss";
-import Button from "@/shared/api/ui/Button/Button";
+import Button from "@/shared/ui/Button/Button";
 import { companyStore } from "@/entities/company/store";
 import { observer } from "mobx-react-lite";
 import { formatDateForDisplay, snakeToRegular } from "./lib";

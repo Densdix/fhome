@@ -1,5 +1,5 @@
-import Modal from "@/shared/api/ui/Modal/Modal";
-import Button from "@/shared/api/ui/Button/Button";
+import Modal from "@/shared/ui/Modal/Modal";
+import Button from "@/shared/ui/Button/Button";
 import styles from "./DeleteCompany.module.scss";
 import { companyStore } from "../../store";
 import { remove } from "../../api";
