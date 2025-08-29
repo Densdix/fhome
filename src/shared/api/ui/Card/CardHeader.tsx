@@ -1,50 +1,19 @@
-import React from 'react';
+import { FC, ReactNode } from 'react';
 import styles from './index.module.scss';
-import Button from '@/shared/api/ui/Button/Button';
 
 type CardHeaderProps = {
   title: string;
-  isEditing: boolean;
-  onEdit: () => void;
-  onSave: () => void;
-  onCancel: () => void;
+  children: ReactNode;
 };
 
-const CardHeader: React.FC<CardHeaderProps> = ({
+const CardHeader: FC<CardHeaderProps> = ({
   title,
-  isEditing,
-  onEdit,
-  onSave,
-  onCancel,
+  children,
 }) => {
   return (
     <div className={styles.card__header}>
       <h3 className={styles.card__title}>{title}</h3>
-      <div className={styles.card__actions}>
-        {isEditing ? (
-          <>
-            <Button
-              variant="fluttened"
-              text="Save changes"
-              icon="check"
-              onClick={onSave}
-            />
-            <Button
-              variant="fluttened"
-              text="Cancel"
-              icon="x"
-              onClick={onCancel}
-            />
-          </>
-        ) : (
-          <Button
-            variant="fluttened"
-            text="Edit"
-            icon="edit"
-            onClick={onEdit}
-          />
-        )}
-      </div>
+      <div className={styles.card__actions}>{children}</div>
     </div>
   );
 };

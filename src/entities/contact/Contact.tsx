@@ -5,6 +5,7 @@ import Input from "@/shared/api/ui/Input/Input";
 import { useState } from "react";
 import CardLabel from "@/shared/api/ui/Card/CardLabel";
 import styles from "./Contact.module.scss";
+import Button from "@/shared/api/ui/Button/Button";
 
 const Contact = () => {
   const [isEditing, setIsEditing] = useState(false);
@@ -16,10 +17,33 @@ const Contact = () => {
     <CardContainer>
       <CardHeader
         title="Contact Information"
-        isEditing={isEditing}
-        onEdit={() => setIsEditing(true)}
-        onSave={() => setIsEditing(false)}
-        onCancel={() => setIsEditing(false)}
+        children={
+          <>
+            {isEditing ? (
+              <>
+                <Button
+                  variant="fluttened"
+                  text="Save changes"
+                  icon="check"
+                  onClick={() => setIsEditing(false)}
+                />
+                <Button
+                  variant="fluttened"
+                  text="Cancel"
+                  icon="x"
+                  onClick={() => setIsEditing(false)}
+                />
+              </>
+            ) : (
+              <Button
+                variant="fluttened"
+                text="Edit"
+                icon="edit"
+                onClick={() => setIsEditing(true)}
+              />
+            )}
+          </>
+        }
       />
       <div className={styles.rows}>
         <CardRow>

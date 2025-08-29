@@ -7,6 +7,7 @@ import MultiSelect from "@/shared/api/ui/MultiSelect/MultiSelect";
 import { useState } from "react";
 import CardLabel from "@/shared/api/ui/Card/CardLabel";
 import styles from "./CompanyDetails.module.scss";
+import Button from "@/shared/api/ui/Button/Button";
 
 const CompanyDetails = () => {
   const [isEditing, setIsEditing] = useState(false);
@@ -19,10 +20,33 @@ const CompanyDetails = () => {
     <CardContainer>
       <CardHeader
         title="Details"
-        isEditing={isEditing}
-        onEdit={() => setIsEditing(true)}
-        onSave={() => setIsEditing(false)}
-        onCancel={() => setIsEditing(false)}
+        children={
+          <>
+            {isEditing ? (
+              <>
+                <Button
+                  variant="fluttened"
+                  text="Save changes"
+                  icon="check"
+                  onClick={() => setIsEditing(false)}
+                />
+                <Button
+                  variant="fluttened"
+                  text="Cancel"
+                  icon="x"
+                  onClick={() => setIsEditing(false)}
+                />
+              </>
+            ) : (
+              <Button
+                variant="fluttened"
+                text="Edit"
+                icon="edit"
+                onClick={() => setIsEditing(true)}
+              />
+            )}
+          </>
+        }
       />
       <div className={styles.rows}>
         <CardRow>
@@ -56,7 +80,11 @@ const CompanyDetails = () => {
               </>
             ) : (
               <div className={styles.text}>
-                {agreementNumber || "-"} {agreementDate && `${<span className={styles.slash}>/</span> } ${agreementDate}`}
+                {agreementNumber || "-"}{" "}
+                {agreementDate &&
+                  `${(
+                    <span className={styles.slash}>/</span>
+                  )} ${agreementDate}`}
               </div>
             )}
           </div>
