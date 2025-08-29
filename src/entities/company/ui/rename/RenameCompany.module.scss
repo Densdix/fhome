@@ -1,0 +1,24 @@
+.renameCompany {
+  &__header {
+    margin-bottom: 24px;
+    text-align: center;
+  }
+
+  &__title {
+    font-size: 14px;
+    font-weight: 700;
+    line-height: 24px;
+    letter-spacing: 0.3px;
+    margin: 0;
+  }
+
+  &__input {
+    margin-bottom: 24px;
+  }
+
+  &__buttons {
+    display: flex;
+    gap: 12px;
+    justify-content: space-between;
+  }
+}
