@@ -32,7 +32,7 @@ const Select: React.FC<Props> = ({ placeholder, value, onChange, className, opti
     setIsOpen(false);
   };
 
-  const selectedLabel = options.find(opt => opt.value === selectedValue)?.label || placeholder;
+  const selectedLabel = options.find(opt => opt.value === selectedValue)?.label || placeholder || options[0]?.label || '';
 
   return (
     <div className={styles.selectWrapper} ref={dropdownRef}>
