@@ -1,6 +1,5 @@
 @use '@/_variables.scss';
 
-$color-light-gray: #cccccc;
 $color-medium-gray: #999999;
 $color-primary-hover: #6d4aff;
 $color-primary-active: #6244e6;
@@ -15,6 +14,7 @@ $box-shadow-filled: 0px 3px 8px 0px #0000001F;
   justify-content: space-between;
   align-items: center;
   gap: 0.5rem;
+  width: 100%;
 
   cursor: pointer;
   transition: all 0.2s ease;
@@ -22,7 +22,6 @@ $box-shadow-filled: 0px 3px 8px 0px #0000001F;
   &--filled,
   &--outlined {
     min-width: 9.25rem;
-    width: auto;
     height: 2.5rem;
 
     &.button--withText {
@@ -47,7 +46,7 @@ $box-shadow-filled: 0px 3px 8px 0px #0000001F;
   &--outlined,
   &--fluttened {
     background-color: variables.$white;
-    border: 1px solid $color-light-gray;;
+    border: 1px solid variables.$light-gray;;
     color: variables.$dark-gray;
 
     &:hover {
