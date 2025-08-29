@@ -1,16 +1,16 @@
 import { FC, ReactNode } from 'react';
 import styles from './index.module.scss';
 
-type CardRowProps = {
+type CardProps = {
   children: ReactNode;
 };
 
-const CardRow: FC<CardRowProps> = ({ children }) => {
+const Card: FC<CardProps> = ({ children }) => {
   return (
-    <div className={styles.card__row}>
+    <div className={styles.card}>
       {children}
     </div>
   );
 };
 
-export default CardRow; 
+export default Card; 
