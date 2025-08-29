@@ -1,7 +1,10 @@
+$gray: #808080;
+$black: #333333;
+
 .card {
   background-color: #fff;
   border-radius: 8px;
-  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+  box-shadow: 0px 3px 8px 0px rgba(0, 0, 0, 0.12);
   padding: 16px;
   width: 100%;
 }
@@ -16,7 +19,7 @@
 .card__title {
   font-size: 18px;
   font-weight: 600;
-  color: #3b3b3b;
+  color: $black;
   margin: 0;
 }
 
@@ -33,21 +36,21 @@
 
 .card__row {
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   gap: 16px;
 }
 
 .card__label {
   min-width: 120px;
-  font-size: 14px;
-  color: #666;
-  padding-top: 8px;
+  font-size: 13px;
+  color: $gray;
+  padding-top: 0;
 }
 
 .card__value {
   flex: 1;
   font-size: 14px;
-  color: #3b3b3b;
+  color: $black;
 }
 
 .card__multiInput {
@@ -65,10 +68,10 @@
 .card__multiInputLabel {
   min-width: 60px;
   font-size: 13px;
-  color: #666;
+  color: $gray;
 }
 
 .card__multiInputSeparator {
   font-size: 13px;
-  color: #666;
+  color: $gray;
 }   
