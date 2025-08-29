@@ -1,5 +1,4 @@
-// Button.tsx
-import React from 'react';
+import { FC } from 'react';
 import styles from './Button.module.scss';
 
 type Props = {
@@ -10,11 +9,11 @@ type Props = {
   icon?: string;
 };
 
-const Button: React.FC<Props> = ({ variant, text, onClick, icon }) => {
+const Button: FC<Props> = ({ variant, text, onClick, icon }) => {
   const buttonClass = [
     styles.button,
     variant && styles[`button--${variant}`],
-    !text && styles.button__noText,
+    text ? styles['button--withText'] : styles['button--noText'],
   ]
     .filter(Boolean)
     .join(' ');
@@ -22,9 +21,11 @@ const Button: React.FC<Props> = ({ variant, text, onClick, icon }) => {
   return (
     <button className={buttonClass} onClick={onClick}>
       {icon && <span className={`${styles.button__icon} _icon-${icon}`}></span>}
-      <span className={styles.button__text_container}>
-        {text && <span className={styles.button__text}>{text}</span>}
-      </span>
+      {text && (
+        <span className={styles.button__text_container}>
+          <span className={styles.button__text}>{text}</span>
+        </span>
+      )}
     </button>
   );
 };
