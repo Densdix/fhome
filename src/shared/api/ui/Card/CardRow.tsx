@@ -42,7 +42,7 @@ const CardRow: React.FC<CardRowProps> = ({ row, isEditing, values, onChange }) =
         row.type === 'select' ? (
           <Select
             value={values[row.label]}
-            onChange={(e) => onChange(row.label, e.target.value)}
+            onChange={(value) => onChange(row.label, value)}
             options={row.options || []}
           />
         ) : (
