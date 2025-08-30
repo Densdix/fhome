@@ -24,7 +24,13 @@
 
 .card__actions {
   display: flex;
+  align-items: center;
   gap: 8px;
+
+  &__loader {
+      width: 16px;
+      height: 16px;
+  }
 }
 
 .card__content {

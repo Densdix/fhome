@@ -84,7 +84,7 @@ const CompanyPhotos = observer(() => {
             <>
               {isUploading ? (
                 <div className={styles.photos__loader}>
-                  <Loader />
+                  <Loader size="small" />
                 </div>
               ) : (
                 <Button

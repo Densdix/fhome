@@ -13,6 +13,7 @@ import { formatDateForInput, snakeToRegular } from "./lib";
 import { ICompany, IContract } from "@/entities/company/types";
 import { update } from "@/entities/company/api";
 import { useEffect, useState } from "react";
+import { Loader } from "@/shared/ui/Loader/Loader";
 
 interface CompanyDetailsEditProps {
   setIsEditing: (isEditing: boolean) => void;
@@ -37,7 +38,7 @@ const CompanyDetailsEdit = observer(
       initialBusinessEntity || ""
     );
     const [type, setType] = useState<string[]>(initialType || []);
-
+    const [isSaving, setIsSaving] = useState(false);
     const types = initialType?.map((type: string) => ({
       value: type,
       label: snakeToRegular(type),
@@ -45,23 +46,28 @@ const CompanyDetailsEdit = observer(
 
     const onSave = () => {
       if (!company) return;
+      setIsSaving(true);
       update(company.id, {
         contract,
         businessEntity,
         type,
-      }).then((res: ICompany | Error) => {
-        if (res instanceof Error) {
-          console.error('Error updating company:', res);
-          return;
-        }
-        companyStore.updateCompany({
-          ...company,
-          contract,
-          businessEntity,
-          type,
+      })
+        .then((res: ICompany | Error) => {
+          if (res instanceof Error) {
+            console.error("Error updating company:", res);
+            return;
+          }
+          companyStore.updateCompany({
+            ...company,
+            contract,
+            businessEntity,
+            type,
+          });
+          setIsEditing(false);
+        })
+        .finally(() => {
+          setIsSaving(false);
         });
-        setIsEditing(false);
-      });
     };
 
     const onCancel = () => {
@@ -109,12 +115,16 @@ const CompanyDetailsEdit = observer(
           title="Details"
           children={
             <>
-              <Button
-                variant="fluttened"
-                text="Save changes"
-                icon="check"
-                onClick={onSave}
-              />
+              {isSaving ? (
+                <Loader size="small" />
+              ) : (
+                <Button
+                  variant="fluttened"
+                  text="Save changes"
+                  icon="check"
+                  onClick={onSave}
+                />
+              )}
               <Button
                 variant="fluttened"
                 text="Cancel"

@@ -11,12 +11,13 @@ import { observer } from "mobx-react-lite";
 import { updateContact } from "@/entities/contact/api";
 import { convertToInitialPhoneFormat, formatPhoneNumber } from "./lib";
 import { validateEmail, validatePhone } from "./lib";
+import { Loader } from "@/shared/ui/Loader/Loader";
 
 const Contact = observer(() => {
   const [isEditing, setIsEditing] = useState(false);
   const [emailError, setEmailError] = useState("");
   const [phoneError, setPhoneError] = useState("");
-
+  const [isSaving, setIsSaving] = useState(false);
   const contact = contactStore.getContact();
 
   if (!contact) return null;
@@ -32,6 +33,7 @@ const Contact = observer(() => {
   const [email, setEmail] = useState(initialEmail);
 
   const onSave = () => {
+    setIsSaving(true);
     const emailValidation = validateEmail(email);
     const phoneValidation = validatePhone(phone);
 
@@ -58,6 +60,8 @@ const Contact = observer(() => {
         email,
       });
       setIsEditing(false);
+    }).finally(() => {
+      setIsSaving(false);
     });
   };
 
@@ -94,12 +98,16 @@ const Contact = observer(() => {
           <>
             {isEditing ? (
               <>
-                <Button
-                  variant="fluttened"
-                  text="Save changes"
-                  icon="check"
-                  onClick={onSave}
-                />
+                {isSaving ? (
+                  <Loader size="small" />
+                ) : (
+                  <Button
+                    variant="fluttened"
+                    text="Save changes"
+                    icon="check"
+                    onClick={onSave}
+                  />
+                )}
                 <Button
                   variant="fluttened"
                   text="Cancel"

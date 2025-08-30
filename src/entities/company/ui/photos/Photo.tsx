@@ -20,7 +20,7 @@ const Photo = ({ name, url, onDelete, isDeleting }: PhotoProps) => {
       <div className={styles.photo__deleteButton}>
         {isDeleting ? (
           <div className={styles.photo__deleteButton__loader}>
-            <Loader />
+            <Loader size="small" />
           </div>
         ) : (
           <Button
