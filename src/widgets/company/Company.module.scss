@@ -2,6 +2,13 @@
   display: flex;
   position: relative;
 
+  &__loader {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+  }
+  
   &__backButton {
     position: absolute;
     top: 6px;

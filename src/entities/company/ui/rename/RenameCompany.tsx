@@ -7,6 +7,7 @@ import { observer } from "mobx-react-lite";
 import { companyStore } from "@/entities/company/store";
 import { update } from "@/entities/company/api";
 import { ICompany } from "../../types";
+import { Loader } from "@/shared/ui/Loader/Loader";
 
 interface RenameCompanyProps {
   isOpen: boolean;
@@ -16,6 +17,7 @@ interface RenameCompanyProps {
 const RenameCompany = observer(({ isOpen, onClose }: RenameCompanyProps) => {
   const company = companyStore.getCompany();
   const [newName, setNewName] = useState(company?.name || "");
+  const [isLoading, setIsLoading] = useState(false);
 
   const onCancel = () => {
     onClose();
@@ -24,13 +26,16 @@ const RenameCompany = observer(({ isOpen, onClose }: RenameCompanyProps) => {
 
   const onRename = () => {
     if (!company) return;
-    onClose();
+    setIsLoading(true);
     update(company.id, { name: newName }).then((res: ICompany | Error) => {
       if (res instanceof Error) {
         console.error('Error renaming company:', res);
         return;
       }
       companyStore.updateCompany({ ...company, name: newName });
+    }).finally(() => {
+      setIsLoading(false);
+      onClose();
     });
   };
 
@@ -49,10 +54,16 @@ const RenameCompany = observer(({ isOpen, onClose }: RenameCompanyProps) => {
             placeholder="Enter new organization name"
           />
         </div>
-        <div className={styles.renameCompany__buttons}>
-          <Button variant="outlined" text="Cancel" onClick={onCancel} />
-          <Button variant="filled" text="Save changes" onClick={onRename} />
-        </div>
+        {isLoading ? (
+          <div className={styles.renameCompany__loader}>
+            <Loader />
+          </div>
+        ) : (
+          <div className={styles.renameCompany__buttons}>
+            <Button variant="outlined" text="Cancel" onClick={onCancel} />
+            <Button variant="filled" text="Save changes" onClick={onRename} />
+          </div>
+        )}
       </div>
     </Modal>
   );

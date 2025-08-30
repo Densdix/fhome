@@ -11,6 +11,7 @@ import { get as getCompany } from "@/entities/company/api";
 import { getContact } from "@/entities/contact/api";
 import { contactStore } from "@/entities/contact/store";
 import { companyStore } from "@/entities/company/store";
+import { Loader } from "@/shared/ui/Loader/Loader";
 
 interface CompanyProps {
   companyId: number;
@@ -51,7 +52,11 @@ const Company = observer(({ companyId, contactId }: CompanyProps) => {
   }, []);
 
   if (isLoading) {
-    return <div>Loading...</div>;
+    return (
+      <div className={styles.company__loader}>
+        <Loader size="large" />
+      </div>
+    );
   }
 
   if (company === null) {
