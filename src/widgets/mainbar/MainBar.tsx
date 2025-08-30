@@ -1,7 +1,10 @@
 import styles from "./Mainbar.module.scss";
 import logo from "@/assets/logo.svg";
+import { useNavigate } from "react-router-dom";
 
 const Mainbar = () => {
+  const navigate = useNavigate();
+
   return (
     <div className={styles.mainBar}>
       <nav className={styles.mainBar__nav}>
@@ -35,7 +38,7 @@ const Mainbar = () => {
             <li className={styles.mainBar__navBottomItem}>
               <a href="#" className={styles.mainBar__navLink} onClick={() => {
                 localStorage.removeItem('token');
-                window.location.href = '/login';
+                navigate('/login');
               }}>
                 <span className={"_icon-signOut"}></span>
               </a>
