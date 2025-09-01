@@ -24,7 +24,7 @@ const Company = observer(({ companyId, contactId }: CompanyProps) => {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const company = companyStore.getCompany();
-  
+
   const fetchCompany = async () => {
     try {
       setIsLoading(true);
@@ -32,7 +32,7 @@ const Company = observer(({ companyId, contactId }: CompanyProps) => {
 
       const resCompany = await getCompany(companyId);
       const resContact = await getContact(contactId);
-      
+
       companyStore.setCompany(resCompany);
       contactStore.setContact(resContact);
     } catch (err) {

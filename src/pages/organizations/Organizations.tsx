@@ -16,7 +16,7 @@ const Organizations = () => {
       try {
         setIsLoading(true);
         setError(null);
-        
+
         const data = await getOrganizations();
         setOrganizations(data);
       } catch (err) {

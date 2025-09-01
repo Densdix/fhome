@@ -1,5 +1,5 @@
 import styles from "./Main.module.scss";
-import Mainbar from "@/widgets/mainbar/Mainbar";
+import Mainbar from "@/widgets/mainbar/MainBar";
 import Sidebar from "@/widgets/sidebar/Sidebar";
 import { ReactNode } from "react";
 
