@@ -1,12 +1,14 @@
 .photos {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 16px;
 
   &__item {
     display: flex;
-    align-items: center;
-    gap: 10px;
+    align-items: flex-start;
+    gap: 12px;
+    flex-wrap: wrap;
+    min-height: 108px;
   }
 
   &__loader {

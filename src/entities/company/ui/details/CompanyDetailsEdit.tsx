@@ -9,10 +9,10 @@ import styles from "./CompanyDetails.module.scss";
 import Button from "@/shared/ui/Button/Button";
 import { companyStore } from "@/entities/company/store";
 import { observer } from "mobx-react-lite";
-import { formatDateForInput, snakeToRegular } from "./lib";
-import { ICompany, IContract } from "@/entities/company/types";
+import { formatDateForInput } from "./lib";
+import { IContract } from "@/entities/company/types";
 import { update } from "@/entities/company/api";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Loader } from "@/shared/ui/Loader/Loader";
 
 interface CompanyDetailsEditProps {
@@ -29,8 +29,6 @@ const CompanyDetailsEdit = observer(
       type: initialType,
     } = company || {};
 
-    const { no, issue_date } = initialContract || {};
-
     const [contract, setContract] = useState<IContract>(
       initialContract as IContract
     );
@@ -39,35 +37,25 @@ const CompanyDetailsEdit = observer(
     );
     const [type, setType] = useState<string[]>(initialType || []);
     const [isSaving, setIsSaving] = useState(false);
-    const types = initialType?.map((type: string) => ({
-      value: type,
-      label: snakeToRegular(type),
-    }));
 
-    const onSave = () => {
+    const onSave = async () => {
       if (!company) return;
       setIsSaving(true);
-      update(company.id, {
-        contract,
-        businessEntity,
-        type,
-      })
-        .then((res: ICompany | Error) => {
-          if (res instanceof Error) {
-            console.error("Error updating company:", res);
-            return;
-          }
-          companyStore.updateCompany({
-            ...company,
-            contract,
-            businessEntity,
-            type,
-          });
-          setIsEditing(false);
-        })
-        .finally(() => {
-          setIsSaving(false);
+
+      try {
+        const updatedCompany = await update(company.id, {
+          contract,
+          businessEntity,
+          type,
         });
+
+        companyStore.updateCompany(updatedCompany);
+        setIsEditing(false);
+      } catch (error) {
+        console.error("Error updating company:", error);
+      } finally {
+        setIsSaving(false);
+      }
     };
 
     const onCancel = () => {
@@ -77,19 +65,21 @@ const CompanyDetailsEdit = observer(
       setIsEditing(false);
     };
 
-    const onAgreementNumberChange = (value: string) => {
+    const onAgreementNumberChange = (
+      e: React.ChangeEvent<HTMLInputElement>
+    ) => {
       if (!company) return;
       setContract({
-        no: value,
+        no: e.target.value,
         issue_date: contract?.issue_date || "",
       });
     };
 
-    const onAgreementDateChange = (value: string) => {
+    const onAgreementDateChange = (e: React.ChangeEvent<HTMLInputElement>) => {
       if (!company) return;
       setContract({
         no: contract?.no || "",
-        issue_date: value,
+        issue_date: e.target.value,
       });
     };
 
@@ -98,14 +88,25 @@ const CompanyDetailsEdit = observer(
       setBusinessEntity(value);
     };
 
-    const onCompanyTypeChange = (values: string[]) => {
+    const onTypeChange = (selectedTypes: string[]) => {
       if (!company) return;
-      setType(values);
+      setType(selectedTypes);
     };
 
-    useEffect(() => {
-      setContract({ no: no || "", issue_date: issue_date || "" });
-    }, [no, issue_date]);
+    const businessEntityOptions = [
+      { value: "Partnership", label: "Partnership" },
+      { value: "Corporation", label: "Corporation" },
+      { value: "LLC", label: "LLC" },
+      { value: "Sole Proprietorship", label: "Sole Proprietorship" },
+    ];
+
+    const typeOptions = [
+      { value: "funeral_home", label: "Funeral Home" },
+      { value: "logistics_services", label: "Logistics Services" },
+      { value: "burial_care_contractor", label: "Burial Care Contractor" },
+      { value: "cremation_services", label: "Cremation Services" },
+      { value: "memorial_services", label: "Memorial Services" },
+    ];
 
     if (!company) return null;
 
@@ -116,21 +117,25 @@ const CompanyDetailsEdit = observer(
           children={
             <>
               {isSaving ? (
-                <Loader size="small" />
+                <div className={styles.actions__loader}>
+                  <Loader size="small" />
+                </div>
               ) : (
-                <Button
-                  variant="fluttened"
-                  text="Save changes"
-                  icon="check"
-                  onClick={onSave}
-                />
+                <>
+                  <Button
+                    variant="fluttened"
+                    text="Save changes"
+                    icon="check"
+                    onClick={onSave}
+                  />
+                  <Button
+                    variant="fluttened"
+                    text="Cancel"
+                    icon="x"
+                    onClick={onCancel}
+                  />
+                </>
               )}
-              <Button
-                variant="fluttened"
-                text="Cancel"
-                icon="x"
-                onClick={onCancel}
-              />
             </>
           }
         />
@@ -144,35 +149,35 @@ const CompanyDetailsEdit = observer(
             >
               <div className={styles.agreement__input}>
                 <Input
-                  placeholder="0000/0-00"
-                  value={contract.no}
-                  onChange={(e) => onAgreementNumberChange(e.target.value)}
+                  value={contract?.no || ""}
+                  onChange={onAgreementNumberChange}
+                  placeholder="Enter agreement number"
                 />
               </div>
               <div className={styles.agreement__date}>
-                <div className={styles.agreement__dateLabel}>
-                  <CardLabel label="Date:" />
-                </div>
-                <div className={styles.agreement__input}>
-                  <Input
-                    type="date"
-                    placeholder="YYYY-MM-DD"
-                    value={formatDateForInput(contract.issue_date)}
-                    onChange={(e) => onAgreementDateChange(e.target.value)}
-                  />
-                </div>
+                <div className={styles.agreement__dateLabel}>D</div>
+                <Input
+                  type="date"
+                  value={
+                    contract?.issue_date
+                      ? formatDateForInput(contract.issue_date)
+                      : ""
+                  }
+                  onChange={onAgreementDateChange}
+                />
               </div>
             </div>
           </CardRow>
           <CardRow>
             <div className={styles.column__first}>
-              <CardLabel label="Buisness entity:" />
+              <CardLabel label="Business entity:" />
             </div>
             <div className={styles.column__second}>
               <Select
                 value={businessEntity}
-                onChange={(value) => onBuisnessEntityChange(value)}
-                options={[{ value: "1", label: businessEntity || "" }]}
+                onChange={onBuisnessEntityChange}
+                options={businessEntityOptions}
+                placeholder="Select business entity"
               />
             </div>
           </CardRow>
@@ -183,8 +188,9 @@ const CompanyDetailsEdit = observer(
             <div className={styles.column__second}>
               <MultiSelect
                 value={type}
-                onChange={(values) => onCompanyTypeChange(values)}
-                options={types || []}
+                onChange={onTypeChange}
+                options={typeOptions}
+                placeholder="Select company types"
               />
             </div>
           </CardRow>

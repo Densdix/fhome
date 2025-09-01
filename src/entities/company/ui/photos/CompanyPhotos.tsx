@@ -7,7 +7,6 @@ import { observer } from "mobx-react-lite";
 import { companyStore } from "@/entities/company/store";
 import { useRef, useState } from "react";
 import { addImage, removeImage } from "@/entities/company/api";
-import { IPhoto } from "@/entities/company/types";
 import { Loader } from "@/shared/ui/Loader/Loader";
 
 const CompanyPhotos = observer(() => {
@@ -22,48 +21,44 @@ const CompanyPhotos = observer(() => {
     fileInputRef.current?.click();
   };
 
-  const onDeletePhoto = (name: string) => {
+  const onDeletePhoto = async (name: string) => {
     if (!company) return;
     setDeletingPhoto(name);
-    removeImage(company.id, name).then((res) => {
-      if (res) {
-        companyStore.updateCompany({
-          ...company,
-          photos: company.photos.filter((photo) => photo.name !== name),
-        });
-      }
-      setDeletingPhoto(null);
-    });
-  };
 
-  const sendPhoto = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files?.[0];
-    if (!file || !company) return;
-    setIsUploading(true);
-    const formData = new FormData();
-    formData.append("file", file);
-    formData.append("company_id", company.id.toString());
-    addImage(company.id, file).then((res: IPhoto | Error) => {
-      if (res instanceof Error) {
-        console.error('Error adding image:', res);
-        return;
-      }
+    try {
+      await removeImage(company.id, name);
       companyStore.updateCompany({
         ...company,
-        photos: [
-          ...company.photos,
-          {
-            name: file.name,
-            filepath: res.filepath,
-            thumbpath: res.thumbpath,
-            createdAt: new Date().toISOString(),
-          },
-        ],
+        photos: company.photos.filter((photo) => photo.name !== name),
       });
+    } catch (error) {
+      console.error("Error deleting photo:", error);
+    } finally {
+      setDeletingPhoto(null);
+    }
+  };
+
+  const sendPhoto = async (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (!file || !company) return;
+
+    setIsUploading(true);
+
+    try {
+      const newPhoto = await addImage(company.id, file);
+
+      companyStore.updateCompany({
+        ...company,
+        photos: [...company.photos, newPhoto],
+      });
+    } catch (error) {
+      console.error("Error adding image:", error);
+    } finally {
       setIsUploading(false);
-    }).finally(() => {
-      setIsUploading(false);
-    });
+      if (fileInputRef.current) {
+        fileInputRef.current.value = "";
+      }
+    }
   };
 
   if (!company) return null;
@@ -76,6 +71,7 @@ const CompanyPhotos = observer(() => {
         hidden
         ref={fileInputRef}
         onChange={sendPhoto}
+        accept="image/*"
       />
       <CardContainer>
         <CardHeader

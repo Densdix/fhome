@@ -15,22 +15,29 @@ const CompanyDetails = observer(() => {
   const { contract, businessEntity, type } = company || {};
   const { no, issue_date } = contract || {};
   const [isEditing, setIsEditing] = useState(false);
-  const [date, setDate] = useState<string | undefined>(issue_date ? formatDateForDisplay(issue_date) : undefined);
-  const [types, setTypes] = useState<{ value: string; label: string }[] | undefined>(
+  const [date, setDate] = useState<string | undefined>(
+    issue_date ? formatDateForDisplay(issue_date) : undefined
+  );
+  const [types, setTypes] = useState<
+    { value: string; label: string }[] | undefined
+  >(
     type?.map((type: string) => ({ value: type, label: snakeToRegular(type) }))
   );
 
   useEffect(() => {
     setDate(issue_date ? formatDateForDisplay(issue_date) : undefined);
-    setTypes(type?.map((type: string) => ({ value: type, label: snakeToRegular(type) })));
+    setTypes(
+      type?.map((type: string) => ({
+        value: type,
+        label: snakeToRegular(type),
+      }))
+    );
   }, [issue_date, type]);
 
   if (!company) return null;
 
   if (isEditing) {
-    return (
-      <CompanyDetailsEdit setIsEditing={setIsEditing} />
-    );
+    return <CompanyDetailsEdit setIsEditing={setIsEditing} />;
   }
 
   return (
@@ -51,10 +58,11 @@ const CompanyDetails = observer(() => {
           <div className={styles.column__first}>
             <CardLabel label="Agreement:" />
           </div>
-          <div className={`${styles.column__second} ${styles.agreement__container}`}>
+          <div
+            className={`${styles.column__second} ${styles.agreement__container}`}
+          >
             <div className={styles.text}>
-              {no || "-"}{" "}
-              {date && <span className={styles.slash}>{'/'}</span>}
+              {no || "-"} {date && <span className={styles.slash}>{"/"}</span>}
               {date && date}
             </div>
           </div>

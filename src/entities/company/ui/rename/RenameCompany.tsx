@@ -3,10 +3,8 @@ import Modal from "@/shared/ui/Modal/Modal";
 import Button from "@/shared/ui/Button/Button";
 import Input from "@/shared/ui/Input/Input";
 import styles from "./RenameCompany.module.scss";
-import { observer } from "mobx-react-lite";
 import { companyStore } from "@/entities/company/store";
 import { update } from "@/entities/company/api";
-import { ICompany } from "../../types";
 import { Loader } from "@/shared/ui/Loader/Loader";
 
 interface RenameCompanyProps {
@@ -14,38 +12,40 @@ interface RenameCompanyProps {
   onClose: () => void;
 }
 
-const RenameCompany = observer(({ isOpen, onClose }: RenameCompanyProps) => {
-  const company = companyStore.getCompany();
-  const [newName, setNewName] = useState(company?.name || "");
+const RenameCompany = ({ isOpen, onClose }: RenameCompanyProps) => {
+  const [newName, setNewName] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const company = companyStore.getCompany();
 
-  const onCancel = () => {
-    onClose();
-    setNewName(company?.name || "");
+  const onRename = async () => {
+    if (!company || !newName.trim()) return;
+    setIsLoading(true);
+
+    try {
+      const updatedCompany = await update(company.id, {
+        name: newName.trim(),
+      });
+
+      companyStore.updateCompany(updatedCompany);
+      onClose();
+      setNewName("");
+    } catch (error) {
+      console.error("Error renaming company:", error);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
-  const onRename = () => {
-    if (!company) return;
-    setIsLoading(true);
-    update(company.id, { name: newName }).then((res: ICompany | Error) => {
-      if (res instanceof Error) {
-        console.error('Error renaming company:', res);
-        return;
-      }
-      companyStore.updateCompany({ ...company, name: newName });
-    }).finally(() => {
-      setIsLoading(false);
-      onClose();
-    });
+  const onCancel = () => {
+    setNewName("");
+    onClose();
   };
 
   return (
-    <Modal isOpen={isOpen} onClose={onClose}>
-      <div>
+    <Modal isOpen={isOpen} onClose={onCancel}>
+      <div className={styles.renameCompany}>
         <div className={styles.renameCompany__header}>
-          <h2 className={styles.renameCompany__title}>
-            Specify the Organization's name
-          </h2>
+          <h3 className={styles.renameCompany__title}>Rename Organization</h3>
         </div>
         <div className={styles.renameCompany__input}>
           <Input
@@ -54,19 +54,31 @@ const RenameCompany = observer(({ isOpen, onClose }: RenameCompanyProps) => {
             placeholder="Enter new organization name"
           />
         </div>
-        {isLoading ? (
-          <div className={styles.renameCompany__loader}>
-            <Loader />
-          </div>
-        ) : (
-          <div className={styles.renameCompany__buttons}>
-            <Button variant="outlined" text="Cancel" onClick={onCancel} />
-            <Button variant="filled" text="Save changes" onClick={onRename} />
-          </div>
-        )}
+        <div className={styles.renameCompany__buttons}>
+          {isLoading ? (
+            <div className={styles.renameCompany__loader}>
+              <Loader size="small" />
+            </div>
+          ) : (
+            <>
+              <Button
+                variant="outlined"
+                text="Cancel"
+                onClick={onCancel}
+                disabled={isLoading}
+              />
+              <Button
+                variant="filled"
+                text="Rename"
+                onClick={onRename}
+                disabled={isLoading || !newName.trim()}
+              />
+            </>
+          )}
+        </div>
       </div>
     </Modal>
   );
-});
+};
 
 export default RenameCompany;

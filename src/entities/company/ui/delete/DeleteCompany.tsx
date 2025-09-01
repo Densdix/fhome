@@ -1,10 +1,11 @@
 import Modal from "@/shared/ui/Modal/Modal";
 import Button from "@/shared/ui/Button/Button";
 import styles from "./DeleteCompany.module.scss";
-import { companyStore } from "../../store";
-import { remove } from "../../api";
-import { Loader } from "@/shared/ui/Loader/Loader";
+import { companyStore } from "@/entities/company/store";
+import { remove } from "@/entities/company/api";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { Loader } from "@/shared/ui/Loader/Loader";
 
 interface DeleteCompanyProps {
   isOpen: boolean;
@@ -12,50 +13,58 @@ interface DeleteCompanyProps {
 }
 
 const DeleteCompany = ({ isOpen, onClose }: DeleteCompanyProps) => {
-
-  const company = companyStore.getCompany();
   const [isLoading, setIsLoading] = useState(false);
+  const navigate = useNavigate();
+  const company = companyStore.getCompany();
 
-  const onCancel = () => {
-    onClose();
-  };
-
-  const onRemove = () => {
+  const onRemove = async () => {
     if (!company) return;
     setIsLoading(true);
-    remove(company.id).then((res: boolean | Error) => {
-      if (res instanceof Error) {
-        console.error('Error removing company:', res);
-        return;
-      }
+
+    try {
+      await remove(company.id);
       companyStore.deleteCompany();
-    }).finally(() => {
-      setIsLoading(false);
       onClose();
-    });
+      navigate("/organizations");
+    } catch (error) {
+      console.error("Error deleting company:", error);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
-      <div>
+      <div className={styles.deleteCompany}>
         <div className={styles.deleteCompany__header}>
-          <h2 className={styles.deleteCompany__title}>
-            Remove the Organization?
-          </h2>
+          <h3 className={styles.deleteCompany__title}>Delete Organization</h3>
         </div>
-        <div className={styles.deleteCompany__text}>
-          Are you sure you want to remove this Organization?
-        </div>
-        {isLoading ? (
-          <div className={styles.deleteCompany__loader}>
-            <Loader />
-          </div>
-        ) : (
+        <p className={styles.deleteCompany__text}>
+          Are you sure you want to delete "{company?.name}"? This action cannot
+          be undone.
+        </p>
         <div className={styles.deleteCompany__buttons}>
-          <Button variant="outlined" text="Cancel" onClick={onCancel} />
-            <Button variant="filled" text="Yes, Remove" onClick={onRemove} />
-          </div>
-        )}
+          {isLoading ? (
+            <div className={styles.deleteCompany__loader}>
+              <Loader size="small" />
+            </div>
+          ) : (
+            <>
+              <Button
+                variant="outlined"
+                text="Cancel"
+                onClick={onClose}
+                disabled={isLoading}
+              />
+              <Button
+                variant="filled"
+                text="Delete"
+                onClick={onRemove}
+                disabled={isLoading}
+              />
+            </>
+          )}
+        </div>
       </div>
     </Modal>
   );

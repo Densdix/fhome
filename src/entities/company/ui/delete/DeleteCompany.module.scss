@@ -9,8 +9,9 @@
     &__title {
         font-size: 14px;
         margin: 0;
-        font-size: 14px;
         font-weight: 600;
+        line-height: 24px;
+        color: rgba(0, 0, 0, 0.8);
     }
     
     &__text {
@@ -26,7 +27,7 @@
     &__buttons {
         display: flex;
         justify-content: space-between;
-        gap: 10px;
+        gap: 12px;
     }
 
     &__loader {

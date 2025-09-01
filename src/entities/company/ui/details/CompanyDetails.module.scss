@@ -3,23 +3,28 @@
 .rows {
     display: flex;
     flex-direction: column;
-    gap: 16px;
+    gap: 12px;
 }
 
 .text {
     font-size: 14px;
     font-weight: 400;
     line-height: 24px;
+    color: rgba(0, 0, 0, 0.8);
+    word-wrap: break-word;
+    overflow-wrap: break-word;
 }
 
 .column__first {
-    width: 172px;
+    width: 160px;
+    flex-shrink: 0;
 }
 
 .column__second {
-    width: 420px;
+    flex: 1;
     display: flex;
-    justify-content: space-between;
+    align-items: center;
+    min-width: 0;
 }
 
 .agreement__input {
@@ -29,10 +34,13 @@
 .agreement__container {
     display: flex;
     align-items: center;
+    gap: 12px;
+    min-width: 0;
 
     .agreement__date {
         display: flex;
         align-items: center;
+        gap: 12px;
 
         .agreement__dateLabel {
             width: 60px;
@@ -42,6 +50,6 @@
 }
 
 .slash {
-    color: variables.$gray;
+    color: rgba(0, 0, 0, 0.3);
     margin: 0 12px;
 }
