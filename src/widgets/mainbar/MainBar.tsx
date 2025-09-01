@@ -1,4 +1,4 @@
-import styles from "./Mainbar.module.scss";
+import styles from "./MainBar.module.scss";
 import logo from "@/assets/logo.svg";
 import { useNavigate } from "react-router-dom";
 
