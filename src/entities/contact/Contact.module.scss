@@ -1,20 +1,35 @@
 .rows {
   display: flex;
   flex-direction: column;
-  gap: 16px;
-  padding: 16px;
+  gap: 12px;
 }
 
 .column__first {
-  min-width: 200px;
+  width: 160px;
+  flex-shrink: 0;
 }
 
 .column__second {
   flex: 1;
+  min-width: 0;
 }
 
 .text {
-  color: var(--text-primary);
+  color: rgba(0, 0, 0, 0.8);
   font-size: 14px;
-  line-height: 20px;
+  line-height: 24px;
+  font-weight: 400;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+}
+
+.inputContainer {
+  flex: 1;
+  min-width: 0;
+}
+
+.error {
+  color: #D72323;
+  font-size: 12px;
+  margin-top: 4px;
 }

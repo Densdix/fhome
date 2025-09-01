@@ -1,0 +1,14 @@
+@use '@/_variables.scss';
+
+.organization {
+  display: flex;
+  flex-direction: column;
+  width: 640px;
+  position: relative;
+
+  &__backButton {
+    position: absolute;
+    top: 6px;
+    left: -76px;
+  }
+}

@@ -8,6 +8,7 @@ type Props = {
   className?: string;
   type?: string;
   pattern?: string;
+  disabled?: boolean;
 };
 
 const Input: React.FC<Props> = ({
@@ -17,6 +18,7 @@ const Input: React.FC<Props> = ({
   className,
   type,
   pattern,
+  disabled,
 }) => {
   const inputClass = [styles.input, className].filter(Boolean).join(" ");
 
@@ -28,6 +30,7 @@ const Input: React.FC<Props> = ({
       onChange={onChange}
       type={type}
       pattern={pattern}
+      disabled={disabled}
     />
   );
 };

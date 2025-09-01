@@ -1,10 +1,13 @@
 import styles from "./Main.module.scss";
 import Mainbar from "@/widgets/mainbar/Mainbar";
 import Sidebar from "@/widgets/sidebar/Sidebar";
-import Company from "@/widgets/company/Company";
+import { ReactNode } from "react";
 
-const Main = () => {
+interface MainProps {
+  children?: ReactNode;
+}
 
+const Main = ({ children }: MainProps) => {
   return (
     <div className={styles.container}>
       <div className={styles.container__mainBar}>
@@ -13,9 +16,7 @@ const Main = () => {
       <div className={styles.container__sidebar}>
         <Sidebar />
       </div>
-      <div className={styles.container__content}>
-        <Company companyId={12} contactId={16} />
-      </div>
+      <div className={styles.container__content}>{children}</div>
     </div>
   );
 };

@@ -32,7 +32,7 @@ const Contact = observer(() => {
   const [phone, setPhone] = useState("");
   const [email, setEmail] = useState(initialEmail);
 
-  const onSave = () => {
+  const onSave = async () => {
     setIsSaving(true);
     const emailValidation = validateEmail(email);
     const phoneValidation = validatePhone(phone);
@@ -41,28 +41,27 @@ const Contact = observer(() => {
     setPhoneError(phoneValidation);
 
     if (emailValidation || phoneValidation) {
+      setIsSaving(false);
       return;
     }
 
-    const [firstname, lastname] = name.split(" ");
+    try {
+      const [firstname, lastname] = name.split(" ");
 
-    updateContact(contact.id, {
-      firstname,
-      lastname,
-      phone: convertToInitialPhoneFormat(phone),
-      email,
-    }).then(() => {
-      contactStore.updateContact({
-        ...contact,
+      const updatedContact = await updateContact(contact.id, {
         firstname,
         lastname,
         phone: convertToInitialPhoneFormat(phone),
         email,
       });
+
+      contactStore.updateContact(updatedContact);
       setIsEditing(false);
-    }).finally(() => {
+    } catch (error) {
+      console.error("Error updating contact:", error);
+    } finally {
       setIsSaving(false);
-    });
+    }
   };
 
   const onCancel = () => {
@@ -74,16 +73,18 @@ const Contact = observer(() => {
     setIsEditing(false);
   };
 
-  const onResponsiblePersonChange = (value: string) => {
-    setName(value);
+  const onResponsiblePersonChange = (
+    e: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    setName(e.target.value);
   };
 
-  const onPhoneChange = (value: string) => {
-    setPhone(formatPhoneNumber(value));
+  const onPhoneChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setPhone(formatPhoneNumber(e.target.value));
   };
 
-  const onEmailChange = (value: string) => {
-    setEmail(value);
+  const onEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setEmail(e.target.value);
   };
 
   useEffect(() => {
@@ -99,21 +100,25 @@ const Contact = observer(() => {
             {isEditing ? (
               <>
                 {isSaving ? (
-                  <Loader size="small" />
+                  <div className={styles.actions__loader}>
+                    <Loader size="small" />
+                  </div>
                 ) : (
-                  <Button
-                    variant="fluttened"
-                    text="Save changes"
-                    icon="check"
-                    onClick={onSave}
-                  />
+                  <>
+                    <Button
+                      variant="fluttened"
+                      text="Save changes"
+                      icon="check"
+                      onClick={onSave}
+                    />
+                    <Button
+                      variant="fluttened"
+                      text="Cancel"
+                      icon="x"
+                      onClick={onCancel}
+                    />
+                  </>
                 )}
-                <Button
-                  variant="fluttened"
-                  text="Cancel"
-                  icon="x"
-                  onClick={onCancel}
-                />
               </>
             ) : (
               <Button
@@ -133,11 +138,13 @@ const Contact = observer(() => {
           </div>
           <div className={styles.column__second}>
             {isEditing ? (
-              <Input
-                placeholder="Enter responsible person name"
-                value={name}
-                onChange={(e) => onResponsiblePersonChange(e.target.value)}
-              />
+              <div className={styles.inputContainer}>
+                <Input
+                  value={name}
+                  onChange={onResponsiblePersonChange}
+                  placeholder="Enter responsible person name"
+                />
+              </div>
             ) : (
               <div className={styles.text}>{name}</div>
             )}
@@ -151,14 +158,14 @@ const Contact = observer(() => {
             {isEditing ? (
               <div className={styles.inputContainer}>
                 <Input
-                  placeholder="Enter phone number"
                   value={phone}
-                  onChange={(e) => onPhoneChange(e.target.value)}
+                  onChange={onPhoneChange}
+                  placeholder="Enter phone number"
                 />
                 {phoneError && <div className={styles.error}>{phoneError}</div>}
               </div>
             ) : (
-              <div className={styles.text}>{phone || "-"}</div>
+              <div className={styles.text}>{phone}</div>
             )}
           </div>
         </CardRow>
@@ -170,14 +177,14 @@ const Contact = observer(() => {
             {isEditing ? (
               <div className={styles.inputContainer}>
                 <Input
-                  placeholder="Enter email"
                   value={email}
-                  onChange={(e) => onEmailChange(e.target.value)}
+                  onChange={onEmailChange}
+                  placeholder="Enter email address"
                 />
                 {emailError && <div className={styles.error}>{emailError}</div>}
               </div>
             ) : (
-              <div className={styles.text}>{email || "-"}</div>
+              <div className={styles.text}>{email}</div>
             )}
           </div>
         </CardRow>

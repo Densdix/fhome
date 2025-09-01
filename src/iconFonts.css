@@ -1,18 +1,18 @@
 @font-face {
-  font-family: 'icons';
-  src:  url('./assets/fonts/icons.eot?artfx2');
-  src:  url('./assets/fonts/icons.eot?artfx2#iefix') format('embedded-opentype'),
-    url('./assets/fonts/icons.ttf?artfx2') format('truetype'),
-    url('./assets/fonts/icons.woff?artfx2') format('woff'),
-    url('./assets/fonts/icons.svg?artfx2#icons') format('svg');
+  font-family: "icons";
+  src: url("./assets/fonts/icons.eot?artfx2");
+  src: url("./assets/fonts/icons.eot?artfx2#iefix") format("embedded-opentype"),
+    url("./assets/fonts/icons.ttf?artfx2") format("truetype"),
+    url("./assets/fonts/icons.woff?artfx2") format("woff"),
+    url("./assets/fonts/icons.svg?artfx2#icons") format("svg");
   font-weight: normal;
   font-style: normal;
   font-display: block;
 }
 
-[class^="_icon-"]::before, [class*=" _icon-"]::before {
-  /* use !important to prevent issues with browser extensions that change fonts */
-  font-family: 'icons' !important;
+[class^="_icon-"]::before,
+[class*=" _icon-"]::before {
+  font-family: "icons" !important;
   speak: never;
   font-style: normal;
   font-weight: normal;
@@ -20,7 +20,6 @@
   text-transform: none;
   line-height: 1;
 
-  /* Better Font Rendering =========== */
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }

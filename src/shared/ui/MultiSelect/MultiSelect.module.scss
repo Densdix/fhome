@@ -21,6 +21,7 @@
   justify-content: space-between;
   overflow: hidden;
   padding-right: 32px;
+  transition: border-color 0.2s ease;
   
   &:hover {
     border-color: #999999;
@@ -90,4 +91,5 @@
 .multiSelect__optionLabel {
   font-size: 14px;
   color: #000;
+  line-height: 24px;
 } 

@@ -10,8 +10,7 @@ export const validateEmail = (email: string) => {
 export const validatePhone = (phone: string) => {
   if (!phone) return "";
 
-  // Count only integers
-  const sanitizedPhone = phone.replace(/[\+\s]/g, "");
+  const sanitizedPhone = phone.replace(/[+\s]/g, "");
   const integerCount = (sanitizedPhone.match(/\d/g) || []).length;
 
   if (integerCount < 10) {
@@ -24,14 +23,11 @@ export const validatePhone = (phone: string) => {
 };
 
 export const formatPhoneNumber = (value: string) => {
-  // Remove all non-digit characters except plus sign at the start
   const cleaned = value.replace(/[^\d+]/g, "");
   const digitsOnly = cleaned.replace(/\D/g, "");
 
-  // If empty, return empty string
   if (!digitsOnly) return "";
 
-  // Format the number
   const countryCode = digitsOnly.slice(0, 1);
   const areaCode = digitsOnly.slice(1, 4);
   const firstPart = digitsOnly.slice(4, 7);
@@ -56,6 +52,5 @@ export const formatPhoneNumber = (value: string) => {
 };
 
 export const convertToInitialPhoneFormat = (formattedPhone: string) => {
-  // Remove all non-digit characters
   return formattedPhone.replace(/\D/g, "");
 };

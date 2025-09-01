@@ -1,46 +1,71 @@
 import CardContainer from "@/shared/ui/Card/CardContainer";
-import styles from "./Login.module.scss";
 import CardRow from "@/shared/ui/Card/CardRow";
 import Input from "@/shared/ui/Input/Input";
 import Button from "@/shared/ui/Button/Button";
-import { useState } from "react";
-import { auth } from "@/shared/api/auth";
-import { useNavigate } from "react-router";
+import styles from "./Login.module.scss";
+import { useState, useEffect } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
+import { isAuthenticated } from "@/shared/api/requestSetup";
+import { useAuth } from "@/shared/hooks/useAuth";
 import { Loader } from "@/shared/ui/Loader/Loader";
 
 const Login = () => {
   const [email, setEmail] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
-  
-  const onLogin = (e: React.FormEvent<HTMLFormElement>) => {
+  const location = useLocation();
+  const { login, isLoading, error, setError } = useAuth();
+
+  useEffect(() => {
+    if (isAuthenticated()) {
+      const from = location.state?.from?.pathname || "/organizations";
+      navigate(from, { replace: true });
+    }
+  }, [navigate, location]);
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setIsLoading(true);
-    auth(email).then((res) => {
-      if (res) {
-        navigate("/");
-      }
-    }).finally(() => {
-      setIsLoading(false);
-    });
+
+    if (!email.trim()) {
+      setError("Please enter your email");
+      return;
+    }
+
+    const success = await login(email.trim());
+
+    if (success) {
+      const from = location.state?.from?.pathname || "/organizations";
+      navigate(from, { replace: true });
+    }
   };
 
   return (
     <div className={styles.login}>
-      <div className={styles.login__container}>
+      <div style={{ width: "100%", maxWidth: "400px" }}>
         <CardContainer>
-          <form onSubmit={onLogin} className={styles.login__container__form}>
+          <form onSubmit={handleSubmit}>
             <CardRow>
-              <Input placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} />
+              <Input
+                type="email"
+                placeholder="Enter your email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                disabled={isLoading}
+              />
             </CardRow>
-          <CardRow>
-            {isLoading ? (
-              <div className={styles.login__container__form__loader}>
-                <Loader />
-              </div>
-            ) : (
-              <Button variant="filled" text="Login" />
-            )}
+            {error && <div className={styles.login__error}>{error}</div>}
+            <CardRow>
+              {isLoading ? (
+                <div className={styles.login__loader}>
+                  <Loader size="medium" />
+                </div>
+              ) : (
+                <Button
+                  variant="filled"
+                  text="Login"
+                  type="submit"
+                  disabled={isLoading}
+                />
+              )}
             </CardRow>
           </form>
         </CardContainer>

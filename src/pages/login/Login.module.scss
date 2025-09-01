@@ -3,18 +3,25 @@
   justify-content: center;
   align-items: center;
   height: 100vh;
+  padding: 20px;
 
-  &__container {
-    min-width: 300px;
+  &__error {
+    color: #D72323;
+    font-size: 14px;
+    text-align: center;
+    margin-bottom: 16px;
+  }
 
-    &__form {
-      display: flex;
-      flex-direction: column;
-      gap: 20px;
+  &__loader {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+  }
 
-      &__loader {
-        margin: 0 auto;
-      }
-    }
+  form {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
   }
 }

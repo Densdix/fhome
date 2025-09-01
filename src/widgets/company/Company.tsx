@@ -24,19 +24,15 @@ const Company = observer(({ companyId, contactId }: CompanyProps) => {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const company = companyStore.getCompany();
+  
   const fetchCompany = async () => {
     try {
       setIsLoading(true);
       setError(null);
 
       const resCompany = await getCompany(companyId);
-      if (resCompany instanceof Error) {
-        throw resCompany;
-      }
       const resContact = await getContact(contactId);
-      if (resContact instanceof Error) {
-        throw resContact;
-      }
+      
       companyStore.setCompany(resCompany);
       contactStore.setContact(resContact);
     } catch (err) {
@@ -49,7 +45,7 @@ const Company = observer(({ companyId, contactId }: CompanyProps) => {
 
   useEffect(() => {
     fetchCompany();
-  }, []);
+  }, [companyId, contactId]);
 
   if (isLoading) {
     return (
@@ -70,9 +66,6 @@ const Company = observer(({ companyId, contactId }: CompanyProps) => {
   return (
     <>
       <div className={styles.company}>
-        <div className={styles.company__backButton}>
-          <IconButton icon="chevron" onClick={() => {}} />
-        </div>
         <div className={styles.company__main}>
           <div className={styles.company__main__header}>
             <div className={styles.company__main__header__title}>

@@ -1,40 +1,85 @@
-import { Routes } from "react-router"
-import Main from "./pages/main/Main"
-import { Route } from "react-router"
-import Login from "./pages/login/Login"
-import { useNavigate } from "react-router";
-import { BrowserRouter } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import Login from "@/pages/login/Login";
+import Main from "@/pages/main/Main";
+import Organizations from "@/pages/organizations/Organizations";
+import Organization from "@/pages/organization/Organization";
+import Contractors from "@/pages/contractors/Contractors";
+import Clients from "@/pages/clients/Clients";
+import ProtectedRoute from "@/shared/components/ProtectedRoute";
+import { isAuthenticated } from "@/shared/api/requestSetup";
+import "./App.css";
 
-function App() {
+const App = () => {
   const navigate = useNavigate();
-  
+
   useEffect(() => {
-    // First check if we have a valid token
-    const token = localStorage.getItem('token');
-    if (!token) {
-      navigate('/login');
-    } else {
-      navigate('/');
+    if (!isAuthenticated()) {
+      navigate("/login");
+    } else if (window.location.pathname === "/") {
+      navigate("/organizations");
     }
   }, [navigate]);
 
   return (
-    <>
-      <Routes>
-        <Route path="/" element={<Main />} />
-        <Route path="/login" element={<Login />} />
-      </Routes>
-    </>
-  )
-}
+    <Routes>
+      <Route path="/login" element={<Login />} />
 
-function AppWrapper() {
+      <Route
+        path="/organizations"
+        element={
+          <ProtectedRoute>
+            <Main>
+              <Organizations />
+            </Main>
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/organization/:id"
+        element={
+          <ProtectedRoute>
+            <Main>
+              <Organization />
+            </Main>
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/contractors"
+        element={
+          <ProtectedRoute>
+            <Main>
+              <Contractors />
+            </Main>
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/clients"
+        element={
+          <ProtectedRoute>
+            <Main>
+              <Clients />
+            </Main>
+          </ProtectedRoute>
+        }
+      />
+
+      <Route path="/" element={<Navigate to="/organizations" replace />} />
+
+      <Route path="*" element={<Navigate to="/organizations" replace />} />
+    </Routes>
+  );
+};
+
+const AppWrapper = () => {
   return (
     <BrowserRouter>
       <App />
     </BrowserRouter>
   );
-}
+};
 
-export default AppWrapper
+export default AppWrapper;

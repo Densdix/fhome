@@ -1,21 +1,46 @@
-import axios, { AxiosInstance, InternalAxiosRequestConfig } from 'axios';
+import axios from "axios";
 
-const baseURL: string = 'https://test-task-api.allfuneral.com/';
+const API_BASE_URL = "https://test-task-api.allfuneral.com";
 
-const $host: AxiosInstance = axios.create({
-    baseURL,
+export const $host = axios.create({
+  baseURL: API_BASE_URL,
 });
 
-
-const $authHost: AxiosInstance = axios.create({
-    baseURL,
+export const $authHost = axios.create({
+  baseURL: API_BASE_URL,
 });
 
-const authInterceptor = (config: InternalAxiosRequestConfig) => {
-    config.headers.authorization = localStorage.getItem('token');
-    return config;
-}
+$authHost.interceptors.request.use((config) => {
+  const token = localStorage.getItem("token");
+  if (token) {
+    config.headers.Authorization = `Bearer ${token}`;
+  }
+  return config;
+});
 
-$authHost.interceptors.request.use(authInterceptor);
+$authHost.interceptors.response.use(
+  (response) => response,
+  (error) => {
+    if (error.response?.status === 401) {
+      localStorage.removeItem("token");
+      window.location.href = "/login";
+    }
+    return Promise.reject(error);
+  }
+);
 
-export { $host, $authHost };
+export const setAuthToken = (token: string) => {
+  localStorage.setItem("token", token);
+};
+
+export const getAuthToken = (): string | null => {
+  return localStorage.getItem("token");
+};
+
+export const removeAuthToken = () => {
+  localStorage.removeItem("token");
+};
+
+export const isAuthenticated = (): boolean => {
+  return !!getAuthToken();
+};
