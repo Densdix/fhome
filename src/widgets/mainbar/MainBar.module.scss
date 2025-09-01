@@ -1,19 +1,16 @@
 @use '@/_variables.scss';
 
 .mainBar {
-  // Layout
   width: 48px;
   height: 100vh;
   display: flex;
   flex-direction: column;
   gap: 2rem;
 
-  // Visual
   background-color: variables.$dark-gray;
   color: variables.$white;
   padding: 20px 6px;
 
-  // Navigation section
   &__nav {
     flex: 1;
     display: flex;
@@ -42,7 +39,6 @@
     width: 100%;
   }
 
-  // Navigation links
   &__navLink {
     width: 36px;
     height: 36px;
@@ -73,7 +69,6 @@
   }
   
 
-  // Logo
   .logo {
     width: 36px;
     height: 36px;

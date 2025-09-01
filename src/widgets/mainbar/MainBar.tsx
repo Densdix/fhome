@@ -36,10 +36,14 @@ const Mainbar = () => {
               </a>
             </li>
             <li className={styles.mainBar__navBottomItem}>
-              <a href="#" className={styles.mainBar__navLink} onClick={() => {
-                localStorage.removeItem('token');
-                navigate('/login');
-              }}>
+              <a
+                href="#"
+                className={styles.mainBar__navLink}
+                onClick={() => {
+                  localStorage.removeItem("token");
+                  navigate("/login");
+                }}
+              >
                 <span className={"_icon-signOut"}></span>
               </a>
             </li>

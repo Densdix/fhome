@@ -1,32 +1,48 @@
-import { FC } from 'react';
-import styles from './Button.module.scss';
+import React from "react";
+import styles from "./Button.module.scss";
 
 type Props = {
-  variant?: 'filled' | 'outlined' | 'fluttened';
-  iconUrl?: string;
+  variant?: "filled" | "outlined" | "fluttened";
   text?: string;
-  onClick?: () => void;
   icon?: string;
+  onClick?: () => void;
   disabled?: boolean;
+  type?: "button" | "submit" | "reset";
 };
 
-const Button: FC<Props> = ({ variant, text, onClick, icon, disabled }) => {
+const Button: React.FC<Props> = ({
+  variant = "filled",
+  text,
+  icon,
+  onClick,
+  disabled = false,
+  type = "button",
+}) => {
   const buttonClass = [
     styles.button,
-    variant && styles[`button--${variant}`],
-    text ? styles['button--withText'] : styles['button--noText'],
-    disabled && styles['button--disabled']
+    styles[`button--${variant}`],
+    text ? styles["button--withText"] : styles["button--noText"],
+    disabled ? styles["button--disabled"] : "",
   ]
     .filter(Boolean)
-    .join(' ');
+    .join(" ");
 
   return (
-    <button className={buttonClass} onClick={onClick}>
-      {icon && <span className={`${styles.button__icon} _icon-${icon}`}></span>}
-      {text && (
-        <span className={styles.button__text_container}>
-          <span className={styles.button__text}>{text}</span>
+    <button
+      className={buttonClass}
+      onClick={onClick}
+      disabled={disabled}
+      type={type}
+    >
+      {icon && (
+        <span className={styles.button__icon}>
+          <span className={`_icon-${icon}`}></span>
         </span>
+      )}
+      {text && (
+        <div className={styles.button__text_container}>
+          <span className={styles.button__text_container__text}>{text}</span>
+        </div>
       )}
     </button>
   );
